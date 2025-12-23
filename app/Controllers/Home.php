@@ -49,6 +49,11 @@ class Home extends BaseController
         return view('berita');
     }
 
+    public function detail_berita(): string
+    {
+        return view('detail-berita');
+    }
+
     public function banjir(): string
     {
         return view('banjir');
