@@ -215,49 +215,25 @@
             <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Prestasi</h5>
             <h1 class="display-4">Prestasi Kelurahan Jagakarsa</h1>
         </div>
-        <div class="owl-carousel price-carousel position-relative" style="padding: 0 45px 45px 45px;">
-            <div class="bg-light rounded text-center">
-                <div class="position-relative">
-                    <img class="img-fluid rounded-top" src="img/price-1.jpg" alt="">
-                    <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
-                        style="background: rgba(29, 42, 77, .8);">
-                        <h3 class="text-white">Sertifikat GIA</h3>
+        <div class="owl-carousel price-carousel position-relative d-flex justify-content-center" style="padding: 0 45px 45px 45px;">
+            <?php foreach ($prestasi as $p): ?>
+                <div class="bg-light rounded text-center">
+                    <div class="position-relative">
+                        <img class="img-fluid rounded-top" src="<?= $p['gambar']
+                                                                    ? base_url('uploads/berita/' . $p['gambar'])
+                                                                    : base_url('img/price-1.jpg') ?>" alt="">
+                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
+                            style="background: rgba(29, 42, 77, .8);">
+                            <h3 class="text-white"><?= $p['judul'] ?></h3>
+                        </div>
+                    </div>
+                    <div class="text-center py-5">
+                        <p class="text-dark"><?= $p['judul'] ?></p>
+                        <p><?= date('d F Y', strtotime($p['created_at'])) ?></p>
+                        <a href="#!" class="btn btn-salman-oren rounded-pill py-3 px-5 my-2">Lihat Selengkapnya</a>
                     </div>
                 </div>
-                <div class="text-center py-5">
-                    <p class="text-dark">Inisiator dari Inovasi Pengolahan Sampah Organik</p>
-                    <p>8 September 2025</p>
-                    <a href="#!" class="btn btn-salman-oren rounded-pill py-3 px-5 my-2">Lihat Selengkapnya</a>
-                </div>
-            </div>
-            <div class="bg-light rounded text-center">
-                <div class="position-relative">
-                    <img class="img-fluid rounded-top" src="img/price-1.jpg" alt="">
-                    <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
-                        style="background: rgba(29, 42, 77, .8);">
-                        <h3 class="text-white">Presentasi</h3>
-                    </div>
-                </div>
-                <div class="text-center py-5">
-                    <p class="text-dark">Pengolahan Sampah Organik</p>
-                    <p>8 September 2025</p>
-                    <a href="#!" class="btn btn-salman-oren rounded-pill py-3 px-5 my-2">Lihat Selengkapnya</a>
-                </div>
-            </div>
-            <div class="bg-light rounded text-center">
-                <div class="position-relative">
-                    <img class="img-fluid rounded-top" src="img/price-1.jpg" alt="">
-                    <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
-                        style="background: rgba(29, 42, 77, .8);">
-                        <h3 class="text-white">Video</h3>
-                    </div>
-                </div>
-                <div class="text-center py-5">
-                    <p class="text-dark">Kualitas Inovasi Daerah</p>
-                    <p>8 September 2025</p>
-                    <a href="#!" class="btn btn-salman-oren rounded-pill py-3 px-5 my-2">Lihat Selengkapnya</a>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
         <div class="col-12 mt-5">
             <a href="<?= base_url('') ?>?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>

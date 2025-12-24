@@ -55,10 +55,10 @@
                     </div>
                     <div>
                         <div class="card-body">
-                            <h5 class="card-title">Beranda</h5>
-                            <p class="card-text">Hero & Detail</p>
+                            <h5 class="card-title">Prestasi (Beranda & Tentang)</h5>
+                            <p class="card-text">Tambahkan Prestasi dan Edit Prestasi</p>
                             <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                            <a href="<?= base_url('/halaman/editberanda') ?>" class="btn rounded-pill btn-primary">Edit</a>
                         </div>
                     </div>
                 </div>
@@ -74,8 +74,92 @@
                     </div>
                     <div>
                         <div class="card-body">
-                            <h5 class="card-title">Tentang Kelurahan</h5>
-                            <p class="card-text">About & Boundaries</p>
+                            <h5 class="card-title">Visi Misi Kelurahan</h5>
+                            <p class="card-text">Visi & Misi</p>
+                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-6">
+        <div class="col-md my-2">
+            <div class="card">
+                <div class="d-flex flex-md-row flex-column">
+                    <div>
+                        <div class="image-square-wrapper">
+                            <img class="card-img card-img-right" src="<?= base_url() ?>/img/hero-beranda.jpg" alt="Card image">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card-body">
+                            <h5 class="card-title">Struktur</h5>
+                            <p class="card-text">Struktur Organisasi</p>
+                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md my-2">
+            <div class="card">
+                <div class="d-flex flex-md-row flex-column">
+                    <div>
+                        <div class="image-square-wrapper">
+                            <img class="card-img card-img-right" src="<?= base_url() ?>/img/hero-beranda.jpg" alt="Card image">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card-body">
+                            <h5 class="card-title">Lembaga</h5>
+                            <p class="card-text">Lembaga Kemasyarakatan</p>
+                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-6">
+        <div class="col-md my-2">
+            <div class="card">
+                <div class="d-flex flex-md-row flex-column">
+                    <div>
+                        <div class="image-square-wrapper">
+                            <img class="card-img card-img-right" src="<?= base_url() ?>/img/hero-beranda.jpg" alt="Card image">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card-body">
+                            <h5 class="card-title">Layanan</h5>
+                            <p class="card-text">Informasi Pelayanan</p>
+                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md my-2">
+            <div class="card">
+                <div class="d-flex flex-md-row flex-column">
+                    <div>
+                        <div class="image-square-wrapper">
+                            <img class="card-img card-img-right" src="<?= base_url() ?>/img/hero-beranda.jpg" alt="Card image">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card-body">
+                            <h5 class="card-title">Area Rawan Banjir</h5>
+                            <p class="card-text">Peta & Detail</p>
                             <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                             <button type="button" class="btn rounded-pill btn-primary">Edit</button>
                         </div>

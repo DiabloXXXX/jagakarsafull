@@ -1,5 +1,5 @@
 <!-- Footer Start -->
-<div class="container-fluid bg-success text-light mt-5 py-5">
+<div class="container-fluid bg-success text-light py-5">
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-lg-3 col-md-6">
@@ -31,13 +31,13 @@
                 </p>
                 <p>Kenali kami lebih dekat lewat media sosial berikut</p>
                 <div class="d-inline-flex align-items-center text-light">
-                    <a class="text-body" href="https://www.instagram.com/kel.jagakarsa01?igsh=djlldHJmcjA3bTNz">
+                    <a class="text-white" href="https://www.instagram.com/kel.jagakarsa01?igsh=djlldHJmcjA3bTNz">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a class="text-body ps-3" href="https://youtube.com/@kel.jagakarsa01">
+                    <a class="text-white ps-3" href="https://youtube.com/@kel.jagakarsa01">
                         <i class="fab fa-youtube"></i>
                     </a>
-                    <a class="text-body ps-3" href="https://www.tiktok.com/@kel.jagakarsa01?_t=ZS-90mgNpLBiT6&_r=1">
+                    <a class="text-white ps-3" href="https://www.tiktok.com/@kel.jagakarsa01?_t=ZS-90mgNpLBiT6&_r=1">
                         <i class="fab fa-tiktok"></i>
                     </a>
                 </div>

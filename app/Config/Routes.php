@@ -27,6 +27,11 @@ $routes->get('/chatbot', 'Home::chatbot');
 
 $routes->get('/dasbor', 'Admin::index', ['filter' => 'authGuard']);
 $routes->get('/halaman', 'Admin::halaman', ['filter' => 'authGuard']);
+
+$routes->get('/halaman/editberanda', 'Admin\Beranda::index', ['filter' => 'authGuard']);
+$routes->post('/admin/editberanda/store', 'Admin\Beranda::store', ['filter' => 'authGuard']);
+$routes->post('/admin/editberanda/update/(:num)', 'Admin\Beranda::update/$1', ['filter' => 'authGuard']);
+
 $routes->get('/adminberita', 'Admin\Berita::index', ['filter' => 'authGuard']);
 $routes->get('/pengaturan', 'Admin::pengaturan', ['filter' => 'authGuard']);
 

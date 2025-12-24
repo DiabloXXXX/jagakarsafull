@@ -39,7 +39,7 @@
             <div class="team-item card-custom mb-3">
                 <div class="row bg-light rounded overflow-hidden h-auto shadow-sm">
                     <div class="col-12 d-flex flex-column">
-                        <div class="p-4">
+                        <div class="p-4 text-dark fw-bold">
                             <h4>Penjelasan Struktur</h4>
                             <p class="my-3">
                             <div class="mb-2">
@@ -70,7 +70,7 @@
 
         </div>
         <div class="col-12 mt-5">
-            <a href="<?= base_url('') ?>?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
+            <a href="<?= base_url('') ?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
         </div>
     </div>
 </div>

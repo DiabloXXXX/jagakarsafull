@@ -16,7 +16,7 @@
     }
 </style>
 
-<div class="container-fluid py-5">
+<div class="container-fluid py-5 bg-primary">
     <div class="container">
         <div class="text-center mx-auto mb-5" style="max-width: 500px;">
             <h1 class="display-4">Visi & Misi Kelurahan Jagakarsa</h1>
@@ -29,7 +29,7 @@
                     <div class="col-12 d-flex flex-column">
                         <div class="p-4">
                             <h3>Visi</h3>
-                            <p class="m-0">
+                            <p class="m-0 text-dark">
                                 Jakarta baru, Kota Modern yang tertata rapih, menjadi tempat hunian yang
                                 dan manusiawi, memiliki masyarakat yang berkebudayaan, dan dengan
                                 pemerintahan yang berorientasi pada pelayanan publik.
@@ -45,16 +45,13 @@
                     <div class="col-12 d-flex flex-column">
                         <div class="p-4">
                             <h3>Misi</h3>
-                            <p class="m-0">
-                                - Sebagai kota modern yang tertata rapih serta konsisten dengan rencana tata ruang wilayah.
-                                <br><br>
-                                - Menjamin ketersediaan hunian dan ruang publik yang layak serta terjangkau bagi warga kota.
-                                <br><br>
-                                - Membangun budaya masyarakat perkotaan yang toleran, tetapi juga sekaligus memiliki kesadaran
-                                dalam memelihara wilayah/lingkungan.
-                                <br><br>
-                                - Membangun pemerintahan yang bersih dan transparan serta berorientasi pada pelayanan publik.
-                            </p>
+                            <ul class="m-0 text-dark">
+                                <li>Sebagai kota modern yang tertata rapih serta konsisten dengan rencana tata ruang wilayah.</li>
+                                <li>Menjamin ketersediaan hunian dan ruang publik yang layak serta terjangkau bagi warga kota.</li>
+                                <li>Membangun budaya masyarakat perkotaan yang toleran, tetapi juga sekaligus memiliki kesadaran
+                                    dalam memelihara wilayah/lingkungan.</li>
+                                <li>Membangun pemerintahan yang bersih dan transparan serta berorientasi pada pelayanan publik.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -62,7 +59,7 @@
 
         </div>
         <div class="col-12 mt-5">
-            <a href="<?= base_url('') ?>?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
+            <a href="<?= base_url('') ?>" class="btn btn-salman-oren py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
         </div>
     </div>
 </div>

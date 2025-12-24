@@ -2,11 +2,25 @@
 
 namespace App\Controllers;
 
+use App\Models\BerandaModel;
+
 class Home extends BaseController
 {
+    protected $berandaModel;
+
+    public function __construct()
+    {
+        $this->berandaModel = new BerandaModel();
+    }
+
     public function index(): string
     {
-        return view('index');
+        $data['prestasi'] = $this->berandaModel
+            ->where('status', 'publish')
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+
+        return view('index', $data);
     }
 
     public function tentang(): string

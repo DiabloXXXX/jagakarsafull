@@ -30,7 +30,7 @@
                 </div>
             <?php endforeach ?>
             <div class="col-12 mt-5">
-                <a href="<?= base_url('') ?>?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
+                <a href="<?= base_url('') ?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
             </div>
         </div>
     </div>
