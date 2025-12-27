@@ -77,7 +77,7 @@
                             <h5 class="card-title">Visi Misi Kelurahan</h5>
                             <p class="card-text">Visi & Misi</p>
                             <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                            <a href="<?= base_url('/halaman/editvisi') ?>" class="btn rounded-pill btn-primary">Edit</a>
                         </div>
                     </div>
 
@@ -99,7 +99,7 @@
                             <h5 class="card-title">Struktur</h5>
                             <p class="card-text">Struktur Organisasi</p>
                             <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                            <a href="<?= base_url('/halaman/editstruktur') ?>" class="btn rounded-pill btn-primary">Edit</a>
                         </div>
                     </div>
 
@@ -119,7 +119,7 @@
                             <h5 class="card-title">Lembaga</h5>
                             <p class="card-text">Lembaga Kemasyarakatan</p>
                             <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                            <a href="<?= base_url('/halaman/editlembaga') ?>" class="btn rounded-pill btn-primary">Edit</a>
                         </div>
                     </div>
 
@@ -141,7 +141,7 @@
                             <h5 class="card-title">Layanan</h5>
                             <p class="card-text">Informasi Pelayanan</p>
                             <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                            <a href="<?= base_url('/halaman/editlayanan') ?>" class="btn rounded-pill btn-primary">Edit</a>
                         </div>
                     </div>
 
@@ -161,7 +161,7 @@
                             <h5 class="card-title">Area Rawan Banjir</h5>
                             <p class="card-text">Peta & Detail</p>
                             <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                            <button type="button" class="btn rounded-pill btn-primary">Edit</button>
+                            <a href="<?= base_url('/halaman/editbanjir') ?>" class="btn rounded-pill btn-primary">Edit</a>
                         </div>
                     </div>
 

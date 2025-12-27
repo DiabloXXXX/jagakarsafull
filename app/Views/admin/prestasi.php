@@ -36,7 +36,7 @@
                                 data-bs-target="#editModal"><i class='bx bx-edit'></i>
                             </button>
 
-                            <a href="<?= base_url('admin/berita/delete/' . $b['id']) ?>" onclick="return confirm('Hapus berita ini?')" class="btn btn-sm btn-danger me-2 my-2 fw-bold text-white">
+                            <a href="<?= base_url('admin/editberanda/delete/' . $b['id']) ?>" onclick="return confirm('Hapus prestasi ini?')" class="btn btn-sm btn-danger me-2 my-2 fw-bold text-white">
                                 <i class='bx bx-trash'></i>
                             </a>
                         </div>

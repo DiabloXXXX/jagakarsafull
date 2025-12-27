@@ -31,6 +31,22 @@ $routes->get('/halaman', 'Admin::halaman', ['filter' => 'authGuard']);
 $routes->get('/halaman/editberanda', 'Admin\Beranda::index', ['filter' => 'authGuard']);
 $routes->post('/admin/editberanda/store', 'Admin\Beranda::store', ['filter' => 'authGuard']);
 $routes->post('/admin/editberanda/update/(:num)', 'Admin\Beranda::update/$1', ['filter' => 'authGuard']);
+$routes->get('/admin/editberanda/delete/(:num)', 'Admin\Beranda::delete/$1', ['filter' => 'authGuard']);
+
+$routes->get('/halaman/editvisi', 'Admin\Halaman::visi', ['filter' => 'authGuard']);
+$routes->post('/admin/editvisi/update', 'Admin\Halaman::visiupdate', ['filter' => 'authGuard']);
+
+$routes->get('/halaman/editstruktur', 'Admin\Halaman::struktur', ['filter' => 'authGuard']);
+$routes->post('/admin/editstruktur/update', 'Admin\Halaman::strukturupdate', ['filter' => 'authGuard']);
+
+$routes->get('/halaman/editlembaga', 'Admin\Halaman::lembaga', ['filter' => 'authGuard']);
+$routes->post('/admin/editlembaga/update', 'Admin\Halaman::lembagaupdate', ['filter' => 'authGuard']);
+
+$routes->get('/halaman/editlayanan', 'Admin\Halaman::layanan', ['filter' => 'authGuard']);
+$routes->post('/admin/editlayanan/update', 'Admin\Halaman::layananupdate', ['filter' => 'authGuard']);
+
+$routes->get('/halaman/editbanjir', 'Admin\Halaman::banjir', ['filter' => 'authGuard']);
+$routes->post('/admin/editbanjir/update', 'Admin\Halaman::banjirupdate', ['filter' => 'authGuard']);
 
 $routes->get('/adminberita', 'Admin\Berita::index', ['filter' => 'authGuard']);
 $routes->get('/pengaturan', 'Admin::pengaturan', ['filter' => 'authGuard']);

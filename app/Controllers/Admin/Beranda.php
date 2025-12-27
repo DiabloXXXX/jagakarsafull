@@ -63,4 +63,10 @@ class Beranda extends BaseController
 
         return redirect()->back()->with('success', 'Prestasi diperbarui');
     }
+
+    public function delete($id)
+    {
+        $this->berandaModel->delete($id);
+        return redirect()->back()->with('success', 'Prestasi berhasil dihapus');
+    }
 }

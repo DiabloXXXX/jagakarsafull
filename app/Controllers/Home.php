@@ -25,7 +25,12 @@ class Home extends BaseController
 
     public function tentang(): string
     {
-        return view('tentang');
+        $data['prestasi'] = $this->berandaModel
+            ->where('status', 'publish')
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+
+        return view('tentang', $data);
     }
 
     public function visi(): string
