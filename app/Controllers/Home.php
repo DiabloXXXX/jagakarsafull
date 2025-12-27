@@ -3,14 +3,17 @@
 namespace App\Controllers;
 
 use App\Models\BerandaModel;
+use App\Models\HalamanModel;
 
 class Home extends BaseController
 {
     protected $berandaModel;
+    protected $halamanModel;
 
     public function __construct()
     {
         $this->berandaModel = new BerandaModel();
+        $this->halamanModel = new HalamanModel();
     }
 
     public function index(): string
@@ -35,12 +38,16 @@ class Home extends BaseController
 
     public function visi(): string
     {
-        return view('visi');
+        return view('visi', [
+            'h' => $this->halamanModel->first()
+        ]);
     }
 
     public function struktur(): string
     {
-        return view('struktur');
+        return view('struktur', [
+            'h' => $this->halamanModel->first()
+        ]);
     }
 
     public function tugas(): string
@@ -55,12 +62,16 @@ class Home extends BaseController
 
     public function lembaga(): string
     {
-        return view('lembaga');
+        return view('lembaga', [
+            'h' => $this->halamanModel->first()
+        ]);
     }
 
     public function layanan(): string
     {
-        return view('layanan');
+        return view('layanan', [
+            'h' => $this->halamanModel->first()
+        ]);
     }
 
     public function berita(): string
@@ -75,7 +86,9 @@ class Home extends BaseController
 
     public function banjir(): string
     {
-        return view('banjir');
+        return view('banjir', [
+            'h' => $this->halamanModel->first()
+        ]);
     }
 
     public function chatbot(): string

@@ -3,6 +3,12 @@
 <?= $this->section('page-Content'); ?>
 
 <div class="container-xxl grow container-p-y">
+    <?php if (session()->getFlashdata('success')) : ?>
+        <div class="alert alert-success alert-dismissible fade show fw-bold" role="alert">
+            <?= session()->getFlashdata('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
     <h5 class="pb-1 mb-6 fw-bold text-primary">Kelola Prestasi</h5>
     <button type="button" class="btn btn- btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#tambahBerita"><i class="bx bx-plus fw-bold me-2"></i>Tambah Prestasi Baru</button>
     <div class="row mb-12 g-6 mt-4">
@@ -44,6 +50,9 @@
                 </div>
             <?php endforeach ?>
         </div>
+        <div class="mt-6">
+            <a href="<?= base_url('/halaman') ?>" class="btn btn-outline-secondary">Kembali</a>
+        </div>
     </div>
 </div>
 
@@ -61,12 +70,12 @@
                     <div class="row">
                         <div class="col mb-6">
                             <label for="nameWithTitle" class="form-label">Nama Prestasi</label>
-                            <input type="text" id="judul" name="judul" class="form-control" placeholder="Masukkan Judul Berita" />
+                            <input type="text" id="judul" name="judul" class="form-control" placeholder="Masukkan Judul Prestasi" />
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col mb-6">
-                            <label for="nameWithTitle" class="form-label">Gambar Sertifikat</label>
+                            <label for="nameWithTitle" class="form-label">Foto Prestasi</label>
                             <input class="form-control" type="file" id="gambar" name="gambar">
                         </div>
                     </div>
@@ -95,7 +104,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Edit Berita</h5>
+                <h5 class="modal-title" id="modalCenterTitle">Edit Prestasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="editForm" method="post" enctype="multipart/form-data">
@@ -103,20 +112,20 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-6">
-                            <label for="nameWithTitle" class="form-label">Judul Berita</label>
+                            <label for="nameWithTitle" class="form-label">Judul Prestasi</label>
                             <input type="text" id="editJudul" name="judul" class="form-control" placeholder="Masukkan Judul Berita" />
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col mb-6">
-                            <label for="nameWithTitle" class="form-label">Gambar Berita</label>
+                            <label for="nameWithTitle" class="form-label">Foto Prestasi</label>
                             <img id="previewGambar" class="img-fluid mb-2">
                             <input class="form-control" type="file" id="gambar" name="gambar">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col mb-6">
-                            <label for="nameWithTitle" class="form-label">Status Berita</label>
+                            <label for="nameWithTitle" class="form-label">Status</label>
                             <select id="editStatus" name="status" class="form-select">
                                 <option>Pilih Status</option>
                                 <option value="publish">Publish</option>
@@ -127,11 +136,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary">Update Berita</button>
+                    <button class="btn btn-primary">Update Prestasi</button>
                 </div>
             </form>
         </div>
-
     </div>
 </div>
 
@@ -146,7 +154,7 @@
 
             if (this.dataset.gambar) {
                 document.getElementById('previewGambar').src =
-                    "<?= base_url('uploads/berita') ?>/" + this.dataset.gambar;
+                    "<?= base_url('uploads/prestasi') ?>/" + this.dataset.gambar;
             }
         });
     });

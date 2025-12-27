@@ -29,7 +29,9 @@
                 <div class="row bg-light rounded overflow-hidden h-auto shadow-sm">
                     <div class="col-12 d-flex flex-column">
                         <div class="p-4">
-                            <img class="img-fluid h-100" src="img/struktur-organisasi.png" style="object-fit: cover;">
+                            <img class="img-fluid h-100" src="<?= $h['gambar_struktur']
+                                                                    ? base_url('uploads/halaman/' . $h['gambar_struktur'])
+                                                                    : base_url('img/price-1.jpg') ?>" style="object-fit: cover;">
                         </div>
                     </div>
                 </div>

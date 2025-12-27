@@ -27,7 +27,9 @@
             <div class="team-item card-custom mb-4 bg-transparant justify-content-center d-flex">
                 <div class="col-lg-8">
                     <div class="bg-transparant text-center rounded p-2">
-                        <img class="img-fluid h-100" src="img/peta-banjir.png" style="object-fit: cover;">
+                        <img class="img-fluid h-100" src="<?= $h['peta_banjir']
+                                                                ? base_url('uploads/halaman/' . $h['peta_banjir'])
+                                                                : base_url('img/peta-banjir.png') ?>" style="object-fit: cover;">
                     </div>
                 </div>
             </div>
@@ -39,7 +41,7 @@
                                 <h4 class="text-center text-white">Peringatan Banjir</h4>
                                 <p></p>
                                 <br>
-                                <p class="text-white">Kelurahan Jagakarsa memiliki beberapa area yang rawan terhadap banjir, terutama pada musim hujan. Masyarakat diharapkan untuk selalu waspada dan mengikuti instruksi dari pemerintah kelurahan.</p>
+                                <p class="text-white"><?= $h['peringatan_banjir'] ?></p>
                                 <br>
                                 <p></p>
                             </div>
@@ -51,10 +53,10 @@
                         <div class="col-12 d-flex flex-column">
                             <div class="p-4 text-white">
                                 <h4 class="text-center">Tips Keselamatan</h4>
-                                <p><i class="fas fa-check text-success me-3"></i>Siapkan tas darurat berisi dokumen penting</p>
-                                <p><i class="fas fa-check text-success me-3"></i>Ketahui rute evakuasi terdekat</p>
-                                <p><i class="fas fa-check text-success me-3"></i>Pantau informasi cuaca dan peringatan banjir</p>
-                                <p><i class="fas fa-check text-success me-3"></i>Hubungi petugas jika ada keadaan darurat</p>
+                                <p><i class="fas fa-check text-success me-3"></i><?= $h['tips1'] ?></p>
+                                <p><i class="fas fa-check text-success me-3"></i><?= $h['tips2'] ?></p>
+                                <p><i class="fas fa-check text-success me-3"></i><?= $h['tips3'] ?></p>
+                                <p><i class="fas fa-check text-success me-3"></i><?= $h['tips4'] ?></p>
                             </div>
                         </div>
                     </div>
@@ -66,16 +68,16 @@
                         <div class="p-4">
                             <h4 class="mb-3">Area Rawan Banjir</h4>
                             <div class="bg-white rounded p-2 mb-2">
-                                <h5 class="text-success">RT 01 - RT 03 (RW 01)</h5>
-                                <p>Area dekat dengan saluran drainase utama, rawan banjir saat curah hujan tinggi</p>
+                                <h5 class="text-success"><?= $h['area1'] ?></h5>
+                                <p><?= $h['desk1'] ?></p>
                             </div>
                             <div class="bg-white rounded p-2 mb-2">
-                                <h5 class="text-success">RT 01 - RT 03 (RW 01)</h5>
-                                <p>Lokasi yang lebih rendah, sering tergenang air pada musim hujan</p>
+                                <h5 class="text-success"><?= $h['area2'] ?></h5>
+                                <p><?= $h['desk2'] ?></p>
                             </div>
                             <div class="bg-white rounded p-2">
-                                <h5 class="text-success">RT 01 - RT 03 (RW 01)</h5>
-                                <p>Area pemukiman padat yang memerlukan perhatian khusus dalam penanganan banjir</p>
+                                <h5 class="text-success"><?= $h['area3'] ?></h5>
+                                <p><?= $h['desk3'] ?></p>
                             </div>
                         </div>
                     </div>
@@ -86,8 +88,8 @@
                     <div class="col-12 d-flex flex-column">
                         <div class="p-4">
                             <h4 class="mb-3">Hubungi Kami Saat Darurat</h4>
-                            <p class="text-dark"><i class="fa fa-phone me-3"></i>Telepon 021-7270954</p>
-                            <p class="text-dark"><i class="fa fa-envelope me-3"></i>Email kel_jagakarsa@jakarta.go.id</p>
+                            <p class="text-dark"><i class="fa fa-phone me-3"></i>Telepon <?= $h['notelp'] ?></p>
+                            <p class="text-dark"><i class="fa fa-envelope me-3"></i>Email <?= $h['email'] ?></p>
 
                         </div>
                     </div>

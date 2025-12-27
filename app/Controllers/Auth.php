@@ -29,7 +29,7 @@ class Auth extends BaseController
                     'username' => $user['username'],
                     'isLoggedIn' => true
                 ]);
-                return redirect()->to('/dasbor');
+                return redirect()->to('/dasbor/' . $user['id']);
             } else {
                 $session->setFlashdata('msg', 'Password salah.');
                 return redirect()->to('/login');

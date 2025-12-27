@@ -25,7 +25,7 @@ $routes->get('/chatbot', 'Home::chatbot');
 
 // INI ROUTES ADMIN
 
-$routes->get('/dasbor', 'Admin::index', ['filter' => 'authGuard']);
+$routes->get('/dasbor/(:num)', 'Admin::index/$1', ['filter' => 'authGuard']);
 $routes->get('/halaman', 'Admin::halaman', ['filter' => 'authGuard']);
 
 $routes->get('/halaman/editberanda', 'Admin\Beranda::index', ['filter' => 'authGuard']);
@@ -49,7 +49,9 @@ $routes->get('/halaman/editbanjir', 'Admin\Halaman::banjir', ['filter' => 'authG
 $routes->post('/admin/editbanjir/update', 'Admin\Halaman::banjirupdate', ['filter' => 'authGuard']);
 
 $routes->get('/adminberita', 'Admin\Berita::index', ['filter' => 'authGuard']);
-$routes->get('/pengaturan', 'Admin::pengaturan', ['filter' => 'authGuard']);
+
+$routes->get('/pengaturan/(:num)', 'Admin::pengaturan/$1', ['filter' => 'authGuard']);
+$routes->post('admin/user/update/(:num)', 'Admin::update/$1', ['filter' => 'authGuard']);
 
 $routes->group('admin', function ($routes) {
     $routes->get('berita', 'Admin\Berita::index');

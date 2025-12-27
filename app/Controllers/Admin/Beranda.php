@@ -40,7 +40,7 @@ class Beranda extends BaseController
             'gambar' => $namaGambar
         ]);
 
-        return redirect()->back()->with('success', 'Prestasi berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Prestasi berhasil Ditambahkan');
     }
 
     public function update($id)
@@ -61,12 +61,12 @@ class Beranda extends BaseController
 
         $this->berandaModel->update($id, $data);
 
-        return redirect()->back()->with('success', 'Prestasi diperbarui');
+        return redirect()->back()->with('success', 'Prestasi Diperbarui');
     }
 
     public function delete($id)
     {
         $this->berandaModel->delete($id);
-        return redirect()->back()->with('success', 'Prestasi berhasil dihapus');
+        return redirect()->back()->with('success', 'Prestasi berhasil Dihapus');
     }
 }

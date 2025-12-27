@@ -16,7 +16,7 @@
                         style="width: 100px; height: 70px; transform: rotate(-15deg);">
                         <i class="fa fa-2x fa-location-arrow text-white" style="transform: rotate(15deg);"></i>
                     </div>
-                    <a href="https://bit.ly/pelayanankelurahanjagakarsa" class="mb-0 text-primary">bit.ly/pelayanankelurahanjagakarsa</a>
+                    <a href="https://bit.ly/pelayanankelurahanjagakarsa" class="mb-0 text-primary"><?= $h['link'] ?></a>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -26,7 +26,7 @@
                         style="width: 100px; height: 70px; transform: rotate(-15deg);">
                         <i class="fa fa-2x fa-phone text-white" style="transform: rotate(15deg);"></i>
                     </div>
-                    <h6 class="mb-0">021-7270954</h6>
+                    <h6 class="mb-0"><?= $h['notelp'] ?></h6>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -36,7 +36,7 @@
                         style="width: 100px; height: 70px; transform: rotate(-15deg);">
                         <i class="fa fa-2x fa-envelope-open text-white" style="transform: rotate(15deg);"></i>
                     </div>
-                    <h6 class="mb-0">kel_jagakarsa@jakarta.go.id</h6>
+                    <h6 class="mb-0"><?= $h['email'] ?></h6>
                 </div>
             </div>
         </div>
@@ -58,20 +58,20 @@
                             <h4 class="text-center">Hubungi Kami Untuk Informasi Lebih Lanjut</h4>
                         </div>
                         <div class="col-lg-6">
-                            <p class="text-dark"><i class="fa fa-phone me-3"></i>Telepon<br>021-7270954</p>
+                            <p class="text-dark"><i class="fa fa-phone me-3"></i>Telepon<br><?= $h['notelp'] ?></p>
                         </div>
                         <div class="col-lg-6">
-                            <p class="text-dark"><i class="fa fa-envelope me-3"></i>Email<br>kel_jagakarsa@jakarta.go.id</p>
+                            <p class="text-dark"><i class="fa fa-envelope me-3"></i>Email<br><?= $h['email'] ?></p>
                         </div>
                         <div class="col-lg-12">
-                            <p class="text-dark"><i class="fa fa-map-marker-alt me-3"></i>Alamat <br>Jl. Jagakarsa II No.1, RT.1/RW.7, Jagakarsa, Kec. Jagakarsa, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12620
+                            <p class="text-dark"><i class="fa fa-map-marker-alt me-3"></i>Alamat <br><?= $h['alamat'] ?>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 mt-5">
+        <div class="col-12 my-5">
             <a href="<?= base_url('') ?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
         </div>
     </div>

@@ -30,9 +30,7 @@
                         <div class="p-4">
                             <h3>Visi</h3>
                             <p class="m-0 text-dark">
-                                Jakarta baru, Kota Modern yang tertata rapih, menjadi tempat hunian yang
-                                dan manusiawi, memiliki masyarakat yang berkebudayaan, dan dengan
-                                pemerintahan yang berorientasi pada pelayanan publik.
+                                <?= $h['visi'] ?>
                             </p>
                         </div>
                     </div>
@@ -46,11 +44,10 @@
                         <div class="p-4">
                             <h3>Misi</h3>
                             <ul class="m-0 text-dark">
-                                <li>Sebagai kota modern yang tertata rapih serta konsisten dengan rencana tata ruang wilayah.</li>
-                                <li>Menjamin ketersediaan hunian dan ruang publik yang layak serta terjangkau bagi warga kota.</li>
-                                <li>Membangun budaya masyarakat perkotaan yang toleran, tetapi juga sekaligus memiliki kesadaran
-                                    dalam memelihara wilayah/lingkungan.</li>
-                                <li>Membangun pemerintahan yang bersih dan transparan serta berorientasi pada pelayanan publik.</li>
+                                <li><?= $h['misi'] ?></li>
+                                <li><?= $h['misi2'] ?></li>
+                                <li><?= $h['misi3'] ?></li>
+                                <li><?= $h['misi4'] ?></li>
                             </ul>
                         </div>
                     </div>

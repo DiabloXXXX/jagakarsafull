@@ -23,7 +23,7 @@
         $uri = service('uri'); ?>
         <!-- Dashboard -->
         <li class="menu-item <?= ($uri->getSegment(1) == 'dasbor') ? 'active' : '' ?>">
-            <a href="<?= base_url('/dasbor') ?>" class="menu-link">
+            <a href="<?= base_url('/dasbor/' . session()->get('id')) ?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
@@ -46,7 +46,7 @@
             </a>
         </li>
         <li class="menu-item <?= ($uri->getSegment(1) == 'pengaturan') ? 'active' : '' ?>">
-            <a href="<?= base_url('/pengaturan') ?>" class="menu-link">
+            <a href="<?= base_url('pengaturan/' . session()->get('id')) ?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-cog"></i>
                 <div data-i18n="Misc">Pengaturan</div>
             </a>
