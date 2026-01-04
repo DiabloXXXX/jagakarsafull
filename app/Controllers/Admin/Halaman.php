@@ -44,26 +44,30 @@ class Halaman extends BaseController
     public function strukturupdate()
     {
         $file = $this->request->getFile('gambar_struktur');
+        $data = [];
 
+        // Upload dan resize gambar jika ada
         if ($file && $file->isValid() && !$file->hasMoved()) {
-
-            $newName = $file->getRandomName();
-            $file->move('uploads/halaman', $newName);
-
-            // ambil gambar lama
-            $old = $this->halamanModel->find(1);
-
-            // hapus gambar lama
-            if (!empty($old['gambar_struktur']) && file_exists('uploads/halaman/' . $old['gambar_struktur'])) {
-                unlink('uploads/halaman/' . $old['gambar_struktur']);
+            $result = upload_and_resize_image($file, 'uploads/halaman', 1920, 1080, 85);
+            if (!$result['success']) {
+                return redirect()->back()->with('error', $result['error']);
             }
 
-            $data['gambar_struktur'] = $newName;
+            // hapus gambar lama
+            $old = $this->halamanModel->find(1);
+            if (!empty($old['gambar_struktur']) && file_exists(FCPATH . 'uploads/halaman/' . $old['gambar_struktur'])) {
+                unlink(FCPATH . 'uploads/halaman/' . $old['gambar_struktur']);
+            }
+
+            $data['gambar_struktur'] = $result['filename'];
         }
 
-        $this->halamanModel->update(1, $data);
+        if (!empty($data)) {
+            $this->halamanModel->update(1, $data);
+            return redirect()->back()->with('success', 'Struktur berhasil Diperbarui');
+        }
 
-        return redirect()->back()->with('success', 'Struktur berhasil Diperbarui');
+        return redirect()->back()->with('info', 'Tidak ada perubahan yang disimpan');
     }
 
     public function lembaga()
@@ -137,18 +141,15 @@ class Halaman extends BaseController
 
         $file = $this->request->getFile('peta_banjir');
 
-        // if (!$file->isValid()) {
-        //     dd($file->getErrorString());
-        // }
-
-
+        // Upload dan resize gambar jika ada
         if ($file && $file->isValid() && !$file->hasMoved()) {
+            $result = upload_and_resize_image($file, 'uploads/halaman', 1920, 1080, 85);
+            if (!$result['success']) {
+                return redirect()->back()->with('error', $result['error']);
+            }
 
-            $newName = $file->getRandomName();
-            $file->move(FCPATH . 'uploads/halaman', $newName);
-
+            // hapus gambar lama
             $old = $this->halamanModel->find(1);
-
             if (!empty($old['peta_banjir'])) {
                 $oldPath = FCPATH . 'uploads/halaman/' . $old['peta_banjir'];
                 if (file_exists($oldPath)) {
@@ -156,7 +157,7 @@ class Halaman extends BaseController
                 }
             }
 
-            $data['peta_banjir'] = $newName;
+            $data['peta_banjir'] = $result['filename'];
         }
 
         if (!empty($data)) {
@@ -164,5 +165,74 @@ class Halaman extends BaseController
         }
 
         return redirect()->back()->with('success', 'Detail Area Rawan Banjir Diperbarui');
+    }
+
+    public function beranda()
+    {
+        return view('admin/beranda', [
+            'h' => $this->halamanModel->first()
+        ]);
+    }
+
+    public function berandaupdate()
+    {
+        $data = [
+            'hero_title'     => $this->request->getPost('hero_title'),
+            'hero_subtitle'  => $this->request->getPost('hero_subtitle'),
+            'tentang_title'  => $this->request->getPost('tentang_title'),
+            'tentang_text1'  => $this->request->getPost('tentang_text1'),
+            'tentang_text2'  => $this->request->getPost('tentang_text2'),
+            'luas_wilayah'   => $this->request->getPost('luas_wilayah'),
+            'jumlah_rw'      => $this->request->getPost('jumlah_rw'),
+            'jumlah_rt'      => $this->request->getPost('jumlah_rt'),
+            'batas_utara'    => $this->request->getPost('batas_utara'),
+            'batas_selatan'  => $this->request->getPost('batas_selatan'),
+            'batas_timur'    => $this->request->getPost('batas_timur'),
+            'batas_barat'    => $this->request->getPost('batas_barat'),
+        ];
+
+        // Upload Hero Image
+        $heroImage = $this->request->getFile('hero_image');
+        if ($heroImage && $heroImage->isValid() && !$heroImage->hasMoved()) {
+            $result = upload_and_resize_image($heroImage, 'uploads/halaman', 1920, 1080, 85);
+            if (!$result['success']) {
+                return redirect()->back()->with('error', $result['error']);
+            }
+
+            // hapus gambar lama
+            $old = $this->halamanModel->find(1);
+            if (!empty($old['hero_image'])) {
+                $oldPath = FCPATH . 'uploads/halaman/' . $old['hero_image'];
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
+            $data['hero_image'] = $result['filename'];
+        }
+
+        // Upload Gambar Peta
+        $petaImage = $this->request->getFile('gambar_peta');
+        if ($petaImage && $petaImage->isValid() && !$petaImage->hasMoved()) {
+            $result = upload_and_resize_image($petaImage, 'uploads/halaman', 1200, 900, 85);
+            if (!$result['success']) {
+                return redirect()->back()->with('error', $result['error']);
+            }
+
+            // hapus gambar lama
+            $old = $this->halamanModel->find(1);
+            if (!empty($old['gambar_peta'])) {
+                $oldPath = FCPATH . 'uploads/halaman/' . $old['gambar_peta'];
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
+            $data['gambar_peta'] = $result['filename'];
+        }
+
+        $this->halamanModel->update(1, $data);
+
+        return redirect()->back()->with('success', 'Konten Beranda & Tentang berhasil diperbarui');
     }
 }

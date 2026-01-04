@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Kelurahan Jagakarsa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #225808 0%, #518123 50%, #99BD49 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon svg {
+            width: 60px;
+            height: 60px;
+            color: #518123;
+        }
+        
+        h1 {
+            color: #225808;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #225808, #518123);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(34, 88, 8, 0.3);
+        }
+        
+        .tips {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .tips h3 {
+            color: #334155;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .tips ul {
+            list-style: none;
+            color: #64748b;
+            font-size: 13px;
+        }
+        
+        .tips li {
+            padding: 5px 0;
+        }
+        
+        .tips li::before {
+            content: "✓";
+            color: #518123;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 25px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .icon {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .icon svg {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414" />
+            </svg>
+        </div>
+        
+        <h1>Anda Sedang Offline</h1>
+        <p>Sepertinya koneksi internet Anda terputus. Beberapa halaman yang sudah dikunjungi sebelumnya mungkin masih tersedia.</p>
+        
+        <button class="btn" onclick="window.location.reload()">
+            Coba Lagi
+        </button>
+        
+        <div class="tips">
+            <h3>Tips mengatasi masalah:</h3>
+            <ul>
+                <li>Periksa koneksi WiFi atau data seluler</li>
+                <li>Coba matikan dan nyalakan kembali WiFi</li>
+                <li>Pindah ke lokasi dengan sinyal lebih baik</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-refresh when connection is restored
+        window.addEventListener('online', () => {
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>

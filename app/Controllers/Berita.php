@@ -18,7 +18,9 @@ class Berita extends BaseController
         $data['berita'] = $this->beritaModel
             ->where('status', 'publish')
             ->orderBy('created_at', 'DESC')
-            ->findAll();
+            ->paginate(10);
+        
+        $data['pager'] = $this->beritaModel->pager;
 
         return view('berita', $data);
     }
@@ -32,6 +34,13 @@ class Berita extends BaseController
         if (!$data['berita']) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Berita tidak ditemukan');
         }
+
+        // Get related news (excluding current)
+        $data['berita_terkait'] = $this->beritaModel
+            ->where('status', 'publish')
+            ->where('slug !=', $slug)
+            ->orderBy('created_at', 'DESC')
+            ->findAll(5);
 
         return view('detail-berita', $data);
     }

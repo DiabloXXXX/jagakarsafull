@@ -2,43 +2,94 @@
 
 namespace App\Controllers;
 
-use BotMan\BotMan\BotManFactory;
-use BotMan\BotMan\Drivers\DriverManager;
+use App\Models\ChatbotFaqModel;
+use CodeIgniter\HTTP\ResponseInterface;
 
+/**
+ * @property ResponseInterface $response
+ */
 class Chatbot extends BaseController
 {
+    protected $faqModel;
+
+    public function __construct()
+    {
+        $this->faqModel = new ChatbotFaqModel();
+    }
+
     public function handle()
     {
-        // Ambil JSON dari fetch dan jadikan POST
+        // Get JSON from request
         $data = json_decode($this->request->getBody(), true);
-        if ($data && isset($data['message'])) {
-            $_POST['message'] = $data['message'];
+        $message = $data['message'] ?? '';
+        
+        if (empty($message)) {
+            return $this->response->setJSON([
+                'messages' => [['text' => 'Silakan ketik pertanyaan Anda.']]
+            ]);
         }
 
-        DriverManager::loadDriver(\BotMan\Drivers\Web\WebDriver::class);
+        $text = strtolower(trim($message));
+        
+        // Search FAQ from database
+        $faq = $this->faqModel->findByKeyword($text);
+        
+        if ($faq) {
+            $response = $faq['icon'] . ' ' . $faq['answer'];
+        } else {
+            // Default response with suggestions
+            $response = $this->getDefaultResponse();
+        }
 
-        $config = [];
-        $botman = BotManFactory::create($config);
+        return $this->response->setJSON([
+            'messages' => [['text' => $response]]
+        ]);
+    }
 
-        $faq = [
-            'jam buka' => 'Kami buka setiap hari pukul 08.00 - 22.00',
-            'alamat' => 'Alamat kami di Jl. Contoh No. 123',
-            'pembayaran' => 'Kami menerima cash, QRIS, dan transfer bank'
-        ];
+    /**
+     * Get featured FAQs for suggestions (API endpoint)
+     */
+    public function suggestions()
+    {
+        $featured = $this->faqModel->getFeatured(6);
+        $suggestions = [];
+        
+        foreach ($featured as $faq) {
+            $suggestions[] = [
+                'icon' => $faq['icon'],
+                'text' => $faq['question']
+            ];
+        }
 
-        $botman->hears('(.*)', function ($bot, $message) use ($faq) {
-            $text = strtolower($message);
+        return $this->response->setJSON(['suggestions' => $suggestions]);
+    }
 
-            foreach ($faq as $key => $val) {
-                if (str_contains($text, $key)) {
-                    $bot->reply($val);
-                    return;
-                }
+    /**
+     * Get default response when no FAQ matches
+     */
+    private function getDefaultResponse()
+    {
+        // Get all categories for suggestions
+        $categories = $this->faqModel->getCategories();
+        $categoryList = array_column($categories, 'category');
+        
+        $response = "Saya belum memiliki informasi tentang itu. 🤔<br><br>";
+        $response .= "<strong>Coba tanyakan tentang:</strong><br>";
+        
+        if (!empty($categoryList)) {
+            foreach (array_slice($categoryList, 0, 5) as $cat) {
+                $response .= "• " . $cat . "<br>";
             }
-
-            $bot->reply("Maaf, saya belum punya jawaban untuk pertanyaan itu.");
-        });
-
-        $botman->listen();
+        } else {
+            $response .= "• Jam operasional<br>";
+            $response .= "• Alamat kelurahan<br>";
+            $response .= "• Layanan yang tersedia<br>";
+            $response .= "• Cara membuat KTP<br>";
+            $response .= "• Persyaratan dokumen<br>";
+        }
+        
+        $response .= "<br>Atau hubungi kami di <strong>021-7270954</strong>";
+        
+        return $response;
     }
 }

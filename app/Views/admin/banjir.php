@@ -12,7 +12,7 @@
     <div class="card mb-6">
         <div class="card-body pt-4">
 
-            <form action="<?= base_url('/admin/editbanjir/update') ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= base_url('/admin/halaman/editbanjir/update') ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <h5 class="fw-bold">Ubah Detail Area Rawan Banjir</h5>
                 <!-- Preview gambar lama -->
@@ -84,7 +84,7 @@
                 </div>
                 <div class="mt-3">
                     <button type="submit" class="btn btn-primary me-3">Simpan</button>
-                    <a href="<?= base_url('/halaman') ?>" class="btn btn-outline-secondary">Kembali</a>
+                    <a href="<?= base_url('/admin/halaman') ?>" class="btn btn-outline-secondary">Kembali</a>
                 </div>
             </form>
         </div>

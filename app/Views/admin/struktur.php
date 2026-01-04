@@ -12,7 +12,7 @@
     <div class="card mb-6">
         <div class="card-body pt-4">
 
-            <form id="#" action="<?= base_url('/admin/editstruktur/update') ?>" method="POST" enctype="multipart/form-data">
+            <form id="strukturForm" action="<?= base_url('/admin/halaman/editstruktur/update') ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <h5 class="fw-bold">Ubah Foto Struktur Organisasi</h5>
                 <!-- Preview gambar lama -->
@@ -31,12 +31,13 @@
                     type="file"
                     name="gambar_struktur"
                     class="form-control"
-                    accept="image/*">
-                <img id="preview" style="max-height:200px; display:none">
-                <small class="text-muted">Kosongkan jika tidak ingin mengganti gambar</small>
+                    accept="image/*"
+                    onchange="previewImg(this)">
+                <img id="preview" style="max-height:200px; display:none" class="mt-2">
+                <small class="text-muted">Kosongkan jika tidak ingin mengganti gambar. <span class="fw-bold">Ukuran Maks. 2MB</span></small>
                 <div class="mt-3">
                     <button type="submit" class="btn btn-primary me-3">Simpan</button>
-                    <a href="<?= base_url('/halaman') ?>" class="btn btn-outline-secondary">Kembali</a>
+                    <a href="<?= base_url('/admin/halaman') ?>" class="btn btn-outline-secondary">Kembali</a>
                 </div>
             </form>
         </div>

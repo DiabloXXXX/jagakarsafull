@@ -1,139 +1,294 @@
-<html
-    lang="en"
-    class="light-style customizer-hide"
-    dir="ltr"
-    data-theme="theme-default"
-    data-assets-path="<?= base_url('') ?>/admin/assets/"
-    data-template="vertical-menu-template-free">
-
+<!DOCTYPE html>
+<html lang="id">
 <head>
-    <meta charset="utf-8" />
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
-    <title>Login Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
-
-    <meta name="description" content="" />
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - Kelurahan Jagakarsa</title>
+    
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?= base_url('') ?>/admin/assets/img/favicon/favicon.ico" />
+    <link href="<?= base_url() ?>/favicon.ico" rel="icon">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="<?= base_url() ?>/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #99BD49;
+            --secondary: #354F8E;
+            --dark: #1D2A4D;
+        }
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet" />
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="<?= base_url('') ?>/admin/assets/vendor/fonts/boxicons.css" />
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+        }
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="<?= base_url('') ?>/admin/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="<?= base_url('') ?>/admin/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="<?= base_url('') ?>/admin/assets/css/demo.css" />
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: slideUp 0.5s ease-out;
+        }
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="<?= base_url('') ?>/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    <!-- Page CSS -->
-    <!-- Page -->
-    <link rel="stylesheet" href="<?= base_url('') ?>/admin/assets/vendor/css/pages/page-auth.css" />
-    <!-- Helpers -->
-    <script src="<?= base_url('') ?>/admin/assets/vendor/js/helpers.js"></script>
+        .login-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #7a9939 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
 
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="<?= base_url('') ?>/admin/assets/js/config.js"></script>
+        .login-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            margin: 0;
+            opacity: 0.95;
+            font-size: 0.95rem;
+        }
+
+        .login-body {
+            padding: 2.5rem 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(153, 189, 73, 0.25);
+        }
+
+        .input-group-text {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .input-group .form-control {
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: var(--primary);
+        }
+
+        .input-group:focus-within .form-control {
+            border-color: var(--primary);
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary) 0%, #7a9939 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.85rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(153, 189, 73, 0.4);
+            background: linear-gradient(135deg, #7a9939 0%, var(--primary) 100%);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-danger {
+            background: #fee;
+            color: #c33;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .register-link a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .register-link a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .back-home a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-home a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Content -->
-
-    <div class="container-xxl">
-        <div class="authentication-wrapper authentication-basic container-p-y">
-            <div class="authentication-inner">
-                <!-- Register -->
-                <div class="card">
-                    <div class="card-body">
-                        <!-- Logo -->
-                        <div class="app-brand justify-content-center">
-                            <a href="index.html" class="app-brand-link gap-2">
-                                <span class="app-brand-logo demo">
-                                </span>
-                                <span class="app-brand-text demo text-body fw-bolder">Jagakarsa</span>
-                            </a>
-                        </div>
-                        <!-- /Logo -->
-                        <h5 class="mb-2 text-center fw-bold">Login Admin</h5>
-                        <?php if (session()->getFlashdata('msg')): ?>
-                            <div class="alert alert-danger"><?= session()->getFlashdata('msg') ?></div>
-                        <?php endif; ?>
-
-                        <form id="formAuthentication" class="mb-3" action="/auth/login" method="POST">
-                            <div class="my-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="email"
-                                    name="email"
-                                    placeholder="Masukkan Email"
-                                    autofocus />
-                            </div>
-                            <div class="mb-3 form-password-toggle">
-                                <div class="d-flex justify-content-between">
-                                    <label class="form-label" for="password">Password</label>
-                                </div>
-                                <div class="input-group input-group-merge">
-                                    <input
-                                        type="password"
-                                        id="password"
-                                        class="form-control"
-                                        name="password"
-                                        placeholder="Masukkan Password"
-                                        aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-                            </div>
-                        </form>
-
-                        <p class="text-center">
-                            <a href="<?= base_url('/register') ?>" class="fw-bold">
-                                <span>Buat Akun Admin</span>
-                            </a>
-                        </p>
-                    </div>
-                </div>
-                <!-- /Register -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>🏛️ Login Admin</h1>
+                <p>Kelurahan Jagakarsa</p>
             </div>
+            
+            <div class="login-body">
+                <?php if (session()->getFlashdata('msg')): ?>
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        <?= session()->getFlashdata('msg') ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="/auth/login" method="POST">
+                    <?= csrf_field() ?>
+                    <div class="mb-4">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope me-2"></i>Email
+                        </label>
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            id="email" 
+                            name="email" 
+                            placeholder="admin@jagakarsa.go.id"
+                            required 
+                            autofocus>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock me-2"></i>Password
+                        </label>
+                        <div class="input-group">
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="password" 
+                                name="password" 
+                                placeholder="••••••••"
+                                required>
+                            <span class="input-group-text" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-login">
+                        <i class="fas fa-sign-in-alt me-2"></i>Masuk
+                    </button>
+                </form>
+
+                <div class="register-link">
+                    <p class="mb-0">Belum punya akun? 
+                        <a href="<?= base_url('/register') ?>">
+                            <i class="fas fa-user-plus me-1"></i>Buat Akun Admin
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-home">
+            <a href="<?= base_url('/') ?>">
+                <i class="fas fa-arrow-left"></i>
+                Kembali ke Website
+            </a>
         </div>
     </div>
 
-    <!-- / Content -->
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="<?= base_url('') ?>/admin/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="<?= base_url('') ?>/admin/assets/vendor/libs/popper/popper.js"></script>
-    <script src="<?= base_url('') ?>/admin/assets/vendor/js/bootstrap.js"></script>
-    <script src="<?= base_url('') ?>/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-    <script src="<?= base_url('') ?>/admin/assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
-    <!-- Main JS -->
-    <script src="<?= base_url('') ?>/admin/assets/js/main.js"></script>
-
-    <!-- Page JS -->
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
-
 </html>

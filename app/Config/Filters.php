@@ -36,6 +36,8 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'authGuard'     => AuthGuard::class,
+        'visitor'       => \App\Filters\VisitorCounter::class,
+        'ratelimit'     => \App\Filters\RateLimiter::class,
     ];
 
     /**
@@ -75,12 +77,14 @@ class Filters extends BaseFilters
     public array $globals = [
         'before' => [
             // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+            'ratelimit', // Anti DDoS & Brute Force
+            'csrf' => ['except' => ['chatbot', 'chatbot/*', 'api/*', 'api/push/*']],
+            'invalidchars',
+            'visitor', // Counter Logic
         ],
         'after' => [
             // 'honeypot',
-            // 'secureheaders',
+            'secureheaders', // XSS & Clickjacking Protection
         ],
     ];
 

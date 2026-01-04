@@ -35,13 +35,19 @@ abstract class BaseController extends Controller
      *
      * @var list<string>
      */
-    protected $helpers = [];
+    protected $helpers = ['image'];
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
     // protected $session;
+
+    /**
+     * Validation instance (set by validate() method)
+     * @var \CodeIgniter\Validation\Validation|null
+     */
+    protected $validator = null;
 
     /**
      * @return void

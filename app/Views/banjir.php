@@ -2,105 +2,108 @@
 
 <?= $this->section('page-Content'); ?>
 
-<style>
-    .visi-misi-wrapper {
-        width: 100%;
-    }
+<div class="min-h-screen bg-white">
+    
+    <!-- Main Content -->
+    <section class="py-16 md:py-24 bg-white mt-3.5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    .card-custom {
-        transition: 0.2s ease;
-    }
+            <!-- Title Section -->
+            <div class="text-center mb-16">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-8">AREA RAWAN BANJIR</h1>
+            </div>
 
-    .card-custom:hover {
-        transform: translateY(-3px);
-    }
-</style>
+            <!-- Map Section -->
+            <div class="mb-16">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                    <img
+                        src="<?= base_url('images/features/peta-banjir.png') ?>"
+                        alt="Peta Area Rawan Banjir Kelurahan Jagakarsa"
+                        class="w-full h-auto object-cover rounded-3xl"
+                    />
+                </div>
+            </div>
 
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-            <h1 class="text-dark">Area Rawan Banjir</h1>
+            <!-- Information Cards -->
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <!-- Warning Card -->
+                <div class="bg-red-50 border-2 border-red-300 rounded-lg p-8">
+                    <div class="flex items-start gap-4">
+                        <i class="fas fa-exclamation-triangle sm:text-4xl text-red-600 flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-red-700 mb-4">Peringatan Banjir</h3>
+                            <p class="text-lg font-semibold text-gray-700 leading-relaxed">
+                                Kelurahan Jagakarsa memiliki beberapa area yang rawan terhadap banjir, terutama pada musim hujan. Masyarakat diharapkan untuk selalu waspada dan mengikuti instruksi dari pemerintah kelurahan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Safety Tips Card -->
+                <div class="bg-green-50 border-2 border-primary-light rounded-lg p-8">
+                    <div class="flex items-start gap-4">
+                        <i class="fas fa-map-marker-alt sm:text-4xl text-primary-dark flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-primary-dark mb-4">Tips Keselamatan</h3>
+                            <ul class="space-y-3 text-lg font-semibold text-gray-700 list-none">
+                                <li>✓ Siapkan tas darurat berisi dokumen penting</li>
+                                <li>✓ Ketahui rute evakuasi terdekat</li>
+                                <li>✓ Pantau informasi cuaca dan peringatan banjir</li>
+                                <li>✓ Hubungi petugas jika ada keadaan darurat</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flood-Prone Areas List -->
+            <div class="bg-gray-50 rounded-lg p-12 mb-16">
+                <h3 class="text-3xl font-bold text-primary-dark mb-8">Area Rawan Banjir</h3>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg border-l-4 border-primary-light">
+                        <h4 class="text-2xl font-bold text-primary-dark mb-2">RT 01 - RT 03 (RW 01)</h4>
+                        <p class="text-lg font-semibold text-gray-700">
+                            Area dekat dengan saluran drainase utama, rawan banjir saat curah hujan tinggi
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border-l-4 border-primary-light">
+                        <h4 class="text-2xl font-bold text-primary-dark mb-2">RT 04 - RT 06 (RW 03)</h4>
+                        <p class="text-lg font-semibold text-gray-700">
+                            Lokasi yang lebih rendah, sering tergenang air pada musim hujan
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border-l-4 border-primary-light">
+                        <h4 class="text-2xl font-bold text-primary-dark mb-2">RT 07 - RT 09 (RW 05)</h4>
+                        <p class="text-lg font-semibold text-gray-700">
+                            Area pemukiman padat yang memerlukan perhatian khusus dalam penanganan banjir
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="bg-primary-dark rounded-lg p-12 text-white mb-16">
+                <h3 class="text-3xl font-bold mb-8 text-white">Hubungi Kami Saat Darurat</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-lg font-semibold mb-2">Kantor Kelurahan Jagakarsa</p>
+                        <p class="text-xl font-bold">021-7270954</p>
+                    </div>
+                    <div>
+                        <p class="text-lg font-semibold mb-2">Email</p>
+                        <p class="text-xl font-bold break-all">kel_jagakarsa@jakarta.go.id</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <a href="<?= base_url('/') ?>" class="mt-8 sm:mt-10 md:mt-12 bg-primary-light hover:bg-primary-dark text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg inline-flex items-center gap-2 sm:gap-3 transition-all transform hover:scale-105 text-sm sm:text-base md:text-2xl no-underline">
+                <i class="fas fa-arrow-left sm:w-7 sm:h-7 text-xl"></i>
+                Kembali
+            </a>
         </div>
-        <div class="visi-misi-wrapper">
+    </section>
 
-            <!-- Card Visi -->
-            <div class="team-item card-custom mb-4 bg-transparant justify-content-center d-flex">
-                <div class="col-lg-8">
-                    <div class="bg-transparant text-center rounded p-2">
-                        <img class="img-fluid h-100" src="<?= $h['peta_banjir']
-                                                                ? base_url('uploads/halaman/' . $h['peta_banjir'])
-                                                                : base_url('img/peta-banjir.png') ?>" style="object-fit: cover;">
-                    </div>
-                </div>
-            </div>
-            <div class="row g-4 justify-content-center">
-                <div class="team-item card-custom mb-3 col-lg-5 me-3">
-                    <div class="row bg-danger rounded overflow-hidden h-auto shadow-sm">
-                        <div class="col-12 d-flex flex-column">
-                            <div class="p-4">
-                                <h4 class="text-center text-white">Peringatan Banjir</h4>
-                                <p></p>
-                                <br>
-                                <p class="text-white"><?= $h['peringatan_banjir'] ?></p>
-                                <br>
-                                <p></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-item card-custom mb-3 col-lg-5 me-3">
-                    <div class="row bg-info rounded overflow-hidden h-auto shadow-sm">
-                        <div class="col-12 d-flex flex-column">
-                            <div class="p-4 text-white">
-                                <h4 class="text-center">Tips Keselamatan</h4>
-                                <p><i class="fas fa-check text-success me-3"></i><?= $h['tips1'] ?></p>
-                                <p><i class="fas fa-check text-success me-3"></i><?= $h['tips2'] ?></p>
-                                <p><i class="fas fa-check text-success me-3"></i><?= $h['tips3'] ?></p>
-                                <p><i class="fas fa-check text-success me-3"></i><?= $h['tips4'] ?></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="team-item card-custom mb-3">
-                <div class="row bg-light rounded overflow-hidden h-auto shadow-sm">
-                    <div class="col-12 d-flex flex-column">
-                        <div class="p-4">
-                            <h4 class="mb-3">Area Rawan Banjir</h4>
-                            <div class="bg-white rounded p-2 mb-2">
-                                <h5 class="text-success"><?= $h['area1'] ?></h5>
-                                <p><?= $h['desk1'] ?></p>
-                            </div>
-                            <div class="bg-white rounded p-2 mb-2">
-                                <h5 class="text-success"><?= $h['area2'] ?></h5>
-                                <p><?= $h['desk2'] ?></p>
-                            </div>
-                            <div class="bg-white rounded p-2">
-                                <h5 class="text-success"><?= $h['area3'] ?></h5>
-                                <p><?= $h['desk3'] ?></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="team-item card-custom mb-3">
-                <div class="row bg-light rounded overflow-hidden h-auto shadow-sm">
-                    <div class="col-12 d-flex flex-column">
-                        <div class="p-4">
-                            <h4 class="mb-3">Hubungi Kami Saat Darurat</h4>
-                            <p class="text-dark"><i class="fa fa-phone me-3"></i>Telepon <?= $h['notelp'] ?></p>
-                            <p class="text-dark"><i class="fa fa-envelope me-3"></i>Email <?= $h['email'] ?></p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 mt-5">
-            <a href="<?= base_url('') ?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
-        </div>
-    </div>
 </div>
 
 <?= $this->endSection(); ?>

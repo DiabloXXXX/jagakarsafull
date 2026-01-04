@@ -12,7 +12,8 @@
     <div class="card mb-6">
         <div class="card-body pt-4">
 
-            <form id="#" action="<?= base_url('/admin/editvisi/update') ?>" method="POST">
+            <form id="visiForm" action="<?= base_url('/admin/halaman/editvisi/update') ?>" method="POST">
+                <?= csrf_field() ?>
                 <h5 class="fw-bold">Edit Visi & Misi</h5>
                 <div class="row g-6">
                     <div class="col-md-6 mb-3">
@@ -36,9 +37,9 @@
                         <input class="form-control" type="text" name="misi4" id="" value="<?= esc($h['misi4'] ?? '') ?>">
                     </div>
                 </div>
-                <div class="mt-6">
-                    <button type="submit" class="btn btn-primary me-3">Simpan</button>
-                    <a href="<?= base_url('/halaman') ?>" class="btn btn-outline-secondary">Kembali</a>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary me-3 px-4 shadow-sm fw-bold">Simpan Perubahan</button>
+                    <a href="<?= base_url('/admin/halaman') ?>" class="btn btn-outline-secondary px-4">Kembali</a>
                 </div>
             </form>
         </div>

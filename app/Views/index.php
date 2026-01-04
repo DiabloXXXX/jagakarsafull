@@ -2,148 +2,184 @@
 
 <?= $this->section('page-Content'); ?>
 
-<!-- Hero Start -->
-<div class="container-fluid bg-primary py-5 mb-5 hero-header">
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center text-lg-center">
-                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5"
-                    style="border-color: rgba(256, 256, 256, .3) !important;">Selamat Datang</h5>
-                <h1 class="display-1 text-white mb-md-4">Website Resmi Kelurahan Jagakarsa</h1>
-                <div class="pt-2">
-                    <a href="#about" class="btn btn-salman-oren rounded-pill py-md-3 px-md-5 mx-2">Lihat Beranda</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Hero End -->
+<?php
+// Get dynamic data from halaman or use defaults
+$h = $halaman ?? [];
 
-<!-- About Start -->
-<div class="container-fluid py-5" id="about">
-    <div class="container">
-        <div class="row gx-5">
-            <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
-                <div class="position-relative h-100">
-                    <img class="position-absolute w-100 h-100 rounded" src="img/hero-beranda.jpg"
-                        style="object-fit: cover;">
-                </div>
+// Dynamic boundaries from database or defaults
+$boundaries = [
+    ['direction' => 'Utara', 'areas' => $h['batas_utara'] ?? 'Kelurahan Ragunan, Kelurahan Cilandak Timur dan Kelurahan Kebagusan.'],
+    ['direction' => 'Selatan', 'areas' => $h['batas_selatan'] ?? 'Kelurahan Ciganjur dan Kelurahan Srenseng Sawah.'],
+    ['direction' => 'Timur', 'areas' => $h['batas_timur'] ?? 'Kelurahan Lenteng Agung.'],
+    ['direction' => 'Barat', 'areas' => $h['batas_barat'] ?? 'Kelurahan Pondok Labu dan Kecamatan Sawangan Kota Depok.']
+];
+
+// Dynamic content
+$heroTitle = $h['hero_title'] ?? 'Selamat Datang Di Website Kelurahan Jagakarsa';
+$heroSubtitle = $h['hero_subtitle'] ?? '';
+$heroImage = !empty($h['hero_image']) ? 'uploads/halaman/' . $h['hero_image'] : 'images/features/hero-beranda.jpg';
+$tentangTitle = $h['tentang_title'] ?? 'Tentang Kelurahan Jagakarsa';
+$tentangText1 = $h['tentang_text1'] ?? 'Kelurahan Jagakarsa merupakan salah satu Kelurahan yang berada di Kecamatan Jagakarsa Kota Administrasi Jakarta Selatan.';
+$tentangText2 = $h['tentang_text2'] ?? 'Kelurahan Jagakarsa sebagai instansi pemerintah yang melayani masyarakat harus menjalankan fungsi dengan sebaik-baiknya.';
+$luasWilayah = $h['luas_wilayah'] ?? '4,850,000 m²';
+$jumlahRw = $h['jumlah_rw'] ?? '7';
+$jumlahRt = $h['jumlah_rt'] ?? '82';
+$gambarPeta = !empty($h['gambar_peta']) ? 'uploads/halaman/' . $h['gambar_peta'] : 'images/features/map-kelurahan-jagakarsa.png';
+?>
+
+<div class="min-h-screen bg-white">
+    
+    <!-- Hero Section -->
+    <section 
+        class="relative h-96 md:h-[586px] bg-cover bg-center overflow-hidden" 
+        data-aos="fade-in" 
+        data-aos-duration="1200"
+    >
+        <img
+            src="<?= base_url($heroImage) ?>"
+            alt="Kelurahan Jagakarsa"
+            class="w-full h-full object-cover transition-transform duration-[10s] hover:scale-110"
+            loading="eager"
+        />
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
+
+        <!-- Content -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-8 leading-tight max-w-4xl drop-shadow-2xl" 
+                style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);"
+                data-aos="fade-up" data-aos-delay="200">
+                <?= esc($heroTitle) ?>
+            </h1>
+            <?php if (!empty($heroSubtitle)): ?>
+            <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl" 
+               data-aos="fade-up" data-aos-delay="300"
+               style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                <?= esc($heroSubtitle) ?>
+            </p>
+            <?php endif; ?>
+            
+            <!-- CTA Button -->
+            <button 
+                onclick="document.getElementById('tentang').scrollIntoView({ behavior: 'smooth' })"
+                class="btn-ripple pulse-animation bg-[#FF9800] hover:bg-orange-600 text-white font-semibold py-3 px-16 rounded-full flex items-center gap-3 transition-all transform hover:scale-105 shadow-lg text-2xl cursor-pointer border-none"
+                data-aos="fade-up" data-aos-delay="400"
+            >
+                Lihat Beranda
+                <i class="fas fa-arrow-right text-2xl"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- About Content Section -->
+    <section id="tentang" class="py-12 sm:py-16 md:py-24 bg-white scroll-mt-28" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8 max-w-4xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold gradient-text mb-4">
+                    <?= esc($tentangTitle) ?>
+                </h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-[#225808] via-[#99BD49] to-[#FF9800] mx-auto rounded-full"></div>
             </div>
-            <div class="col-lg-7">
-                <div class="mb-4">
-                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Tentang Kelurahan</h5>
-                    <h1 class="display-4">Kelurahan Jagakarsa</h1>
-                </div>
-                <p>
-                    Kelurahan Jagakarsa merupakan salah satu Kelurahan yang berada di Kecamatan
-                    Jagakarsa Kota Administrasi Jakarta Selatan yang memiliki luas sebesar :
-                    4,850,000 m² serta mempunyai 7 RW dan 82 RT.
+            <div class="text-base sm:text-lg md:text-xl text-gray-800 leading-relaxed space-y-4 sm:space-y-6 text-center max-w-4xl mx-auto font-medium">
+                <p data-aos="fade-up" data-aos-delay="100">
+                    <?= esc($tentangText1) ?>
+                    <span class="font-bold text-primary-dark">Luas: <?= esc($luasWilayah) ?></span>,
+                    <span class="font-bold text-primary-dark"><?= esc($jumlahRw) ?> RW</span> dan 
+                    <span class="font-bold text-primary-dark"><?= esc($jumlahRt) ?> RT</span>.
                 </p>
-                <p>
-                    Kelurahan Jagakarsa sebagai instansi pemerintah yang melayani masyarakat
-                    harus menjalankan fungsi dengan sebaik-baiknya. Karena standar organisasi
-                    dan kinerja Kelurahan telah diatur oleh Undang-undang serta peraturan yang ada.
-                    Untuk itu, sebagai pertanggungjawaban dari hasil kegiatan dan pelayanan yang dilakukan.
+                <p data-aos="fade-up" data-aos-delay="200">
+                    <?= esc($tentangText2) ?>
                 </p>
-                <!-- <div class="row g-3 pt-3">
-                    <div class="col-sm-3 col-6">
-                        <div class="bg-light text-center rounded-circle py-4">
-                            <i class="fa fa-3x fa-user-md text-primary mb-3"></i>
-                            <h6 class="mb-0">Qualified<small class="d-block text-primary">Doctors</small></h6>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-6">
-                        <div class="bg-light text-center rounded-circle py-4">
-                            <i class="fa fa-3x fa-procedures text-primary mb-3"></i>
-                            <h6 class="mb-0">Emergency<small class="d-block text-primary">Services</small></h6>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-6">
-                        <div class="bg-light text-center rounded-circle py-4">
-                            <i class="fa fa-3x fa-microscope text-primary mb-3"></i>
-                            <h6 class="mb-0">Accurate<small class="d-block text-primary">Testing</small></h6>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-6">
-                        <div class="bg-light text-center rounded-circle py-4">
-                            <i class="fa fa-3x fa-ambulance text-primary mb-3"></i>
-                            <h6 class="mb-0">Free<small class="d-block text-primary">Ambulance</small></h6>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
-    </div>
-</div>
-<!-- About End -->
+    </section>
 
-<!-- Appointment Start -->
-<div class="container-fluid bg-primary my-5 py-5">
-    <div class="container py-5">
-        <div class="row gx-5">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <div class="mb-4">
-                    <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Batas Wilayah</h5>
-                    <h1 class="display-4 text-success">Batas Wilayah Kelurahan Jagakarsa</h1>
+    <!-- Boundaries Section -->
+    <section class="py-12 sm:py-16 md:py-24 bg-primary-lighter" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-dark mb-8 sm:mb-12">Batas Wilayah Kelurahan</h2>
+
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                <!-- Boundaries List -->
+                <div class="space-y-6 sm:space-y-8">
+                    <?php foreach ($boundaries as $boundary): ?>
+                        <div>
+                            <h3 class="text-base sm:text-lg md:text-2xl font-bold text-black mb-2"><?= esc($boundary['direction']) ?> :</h3>
+                            <p class="text-sm sm:text-base md:text-2xl font-semibold text-black"><?= esc($boundary['areas']) ?></p>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <!-- Map Button -->
+                    <a href="https://maps.google.com/?q=Kelurahan+Jagakarsa" target="_blank"
+                        class="mt-6 sm:mt-8 bg-primary-light hover:bg-primary-dark text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg flex items-center gap-2 sm:gap-3 transition-all transform hover:scale-105 text-sm sm:text-base md:text-2xl w-max no-underline"
+                    >
+                        <i class="fas fa-map-marker-alt sm:w-7 sm:h-7 text-xl"></i>
+                        Lihat di Maps
+                    </a>
                 </div>
-                <p class="text-white mb-5">
-                    Utara :
-                    <br>Kelurahan Ragunan, Kelurahan Cilandak Timur dan Kelurahan Kebagusan.
-                    <br><br>
-                    Selatan :
-                    <br>Kelurahan Ciganjur dan Kelurahan Srenseng Sawah.
-                    <br><br>
-                    Timur :
-                    <br>Kelurahan Lenteng Agung.
-                    <br><br>
-                    Barat :
-                    <br>Kelurahan Pondok Labu dan Kecamatan Sawangan Kota Depok.
-                </p>
-                <a class="btn btn-salman-oren rounded-pill py-3 px-5" href="#!">Lihat di Google Maps</a>
-            </div>
-            <div class="col-lg-6">
-                <div class="bg-transparant text-center rounded p-2">
-                    <img class="img-fluid h-100" src="img/map-kelurahan-jagakarsa.png" style="object-fit: cover;">
+
+                <!-- Map Image -->
+                <div class="flex items-center justify-center">
+                    <div class="w-full rounded-3xl shadow-lg overflow-hidden">
+                        <img
+                            src="<?= base_url($gambarPeta) ?>"
+                            alt="Peta Kelurahan Jagakarsa"
+                            class="w-full h-48 sm:h-64 md:h-96 object-cover transform hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- Appointment End -->
+    </section>
 
-<!-- Pricing Plan Start -->
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Prestasi</h5>
-            <h1 class="display-4">Prestasi Kelurahan Jagakarsa</h1>
-        </div>
-        <div class="owl-carousel price-carousel position-relative d-flex justify-content-center" style="padding: 0 45px 45px 45px;">
-            <?php foreach ($prestasi as $p): ?>
-                <div class="bg-light rounded text-center">
-                    <div class="position-relative">
-                        <img class="img-fluid rounded-top" src="<?= $p['gambar']
-                                                                    ? base_url('uploads/prestasi/' . $p['gambar'])
-                                                                    : base_url('img/price-1.jpg') ?>" alt="">
-                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
-                            style="background: rgba(29, 42, 77, .8);">
-                            <h3 class="text-white"><?= $p['judul'] ?></h3>
+    <!-- Achievements Section -->
+    <section class="py-12 sm:py-16 md:py-24 bg-white" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-black mb-8 sm:mb-12">Prestasi Kelurahan Jagakarsa</h2>
+
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+                <?php $delay = 0; foreach ($prestasi as $p): ?>
+                    <div class="card-modern bg-white rounded-3xl overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="<?= $delay ?>">
+                        <!-- Image -->
+                        <div class="relative h-40 sm:h-48 md:h-64 overflow-hidden border-2 border-black">
+                            <img
+                                src="<?= base_url('uploads/prestasi/' . $p['gambar']) ?>"
+                                alt="<?= esc($p['judul']) ?>"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                loading="lazy"
+                            />
+                            <!-- Gradient Overlay on Hover -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                            <p class="text-sm sm:text-base md:text-2xl font-semibold text-primary-dark">
+                                Prestasi
+                            </p>
+                            <h3 class="text-sm sm:text-base md:text-2xl font-semibold text-black line-clamp-2 group-hover:text-primary-dark transition-colors">
+                                <?= esc($p['judul']) ?>
+                            </h3>
+                            <p class="text-xs sm:text-sm md:text-xl text-gray-600 flex items-center gap-2">
+                                <i class="far fa-calendar-alt"></i>
+                                <?= date('d M Y', strtotime($p['created_at'])) ?>
+                            </p>
+
+                            <!-- Action Button -->
+                            <button 
+                                onclick="alert('<?= esc($p['judul']) ?>')"
+                                class="btn-ripple w-full bg-primary-light hover:bg-primary-dark text-black hover:text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-all text-xs sm:text-sm md:text-2xl cursor-pointer"
+                            >
+                                Lihat Selengkapnya
+                            </button>
                         </div>
                     </div>
-                    <div class="text-center py-5">
-                        <p class="text-dark"><?= $p['judul'] ?></p>
-                        <p><?= date('d F Y', strtotime($p['created_at'])) ?></p>
-                        <a href="#!" class="btn btn-salman-oren rounded-pill py-3 px-5 my-2">Lihat Selengkapnya</a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                <?php $delay += 100; endforeach; ?>
+            </div>
         </div>
-        <div class="col-12 mt-5">
-            <a href="<?= base_url('') ?>?>" class="btn btn-primary py-3" type="submit"><i class="fa fa-arrow-left text-light me-3"></i>Kembali</a>
-        </div>
-    </div>
+    </section>
 
 </div>
-<!-- Pricing Plan End -->
 
 <?= $this->endSection(); ?>

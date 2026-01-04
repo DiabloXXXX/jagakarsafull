@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class BerandaModel extends Model
 {
     protected $table = 'prestasi';
+    protected $primaryKey = 'id';
     protected $allowedFields = [
         'judul',
         'slug',

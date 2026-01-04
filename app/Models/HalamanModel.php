@@ -7,13 +7,32 @@ use CodeIgniter\Model;
 class HalamanModel extends Model
 {
     protected $table = 'halaman';
+    protected $primaryKey = 'id';
     protected $allowedFields = [
+        // Beranda & Tentang
+        'hero_title',
+        'hero_subtitle',
+        'hero_image',
+        'tentang_title',
+        'tentang_text1',
+        'tentang_text2',
+        'luas_wilayah',
+        'jumlah_rw',
+        'jumlah_rt',
+        'gambar_peta',
+        'batas_utara',
+        'batas_selatan',
+        'batas_timur',
+        'batas_barat',
+        // Visi Misi
         'visi',
         'misi',
         'misi2',
         'misi3',
         'misi4',
+        // Struktur
         'gambar_struktur',
+        // Lembaga
         'fdkm',
         'lmk',
         'rw',
@@ -25,10 +44,12 @@ class HalamanModel extends Model
         'posyandu_lan',
         'total_organ',
         'total_anggota',
+        // Layanan
         'link',
         'notelp',
         'email',
         'alamat',
+        // Banjir
         'peta_banjir',
         'peringatan_banjir',
         'tips1',

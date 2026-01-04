@@ -1,56 +1,94 @@
-<!-- Menu -->
-
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
-            <span class="app-brand-logo demo">Logo
-            </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Jagakarsa</span>
-        </a>
-
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-            <i class="bx bx-chevron-left bx-sm align-middle"></i>
-        </a>
+<!-- Sidebar -->
+<aside class="admin-sidebar" id="adminSidebar">
+    <!-- Brand -->
+    <div class="sidebar-brand">
+        <img src="<?= base_url('images/features/logo.png') ?>" alt="Logo Jagakarsa">
+        <span class="sidebar-brand-text">Jagakarsa</span>
     </div>
-
-    <div class="menu-inner-shadow"></div>
-
-    <ul class="menu-inner py-1">
-        <?php
-
-        use Faker\Provider\Base;
-
-        $uri = service('uri'); ?>
+    
+    <!-- Menu -->
+    <?php
+    $uri = service('uri');
+    $segment2 = $uri->getSegment(2);
+    ?>
+    
+    <ul class="sidebar-menu">
         <!-- Dashboard -->
-        <li class="menu-item <?= ($uri->getSegment(1) == 'dasbor') ? 'active' : '' ?>">
-            <a href="<?= base_url('/dasbor/' . session()->get('id')) ?>" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/dashboard') ?>" class="menu-link <?= ($segment2 == 'dashboard') ? 'active' : '' ?>">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Dashboard</span>
             </a>
         </li>
-
-
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Menu</span>
-        </li>
-        <li class="menu-item <?= ($uri->getSegment(1) == 'halaman') ? 'active' : '' ?>">
-            <a href="<?= base_url('/halaman') ?>" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Kelola Halaman</div>
+        
+        <!-- Section: Menu Utama -->
+        <li class="menu-section">Menu Utama</li>
+        
+        <!-- Kelola Halaman -->
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/halaman') ?>" class="menu-link <?= ($segment2 == 'halaman') ? 'active' : '' ?>">
+                <i class="bi bi-file-earmark-richtext"></i>
+                <span>Kelola Halaman</span>
             </a>
         </li>
-        <li class="menu-item <?= ($uri->getSegment(1) == 'adminberita') ? 'active' : '' ?>">
-            <a href="<?= base_url('/adminberita') ?>" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Authentications">Kelola Berita</div>
+        
+        <!-- Kelola Berita -->
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/berita') ?>" class="menu-link <?= ($segment2 == 'berita') ? 'active' : '' ?>">
+                <i class="bi bi-newspaper"></i>
+                <span>Kelola Berita</span>
             </a>
         </li>
-        <li class="menu-item <?= ($uri->getSegment(1) == 'pengaturan') ? 'active' : '' ?>">
-            <a href="<?= base_url('pengaturan/' . session()->get('id')) ?>" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-cog"></i>
-                <div data-i18n="Misc">Pengaturan</div>
+        
+        <!-- Kelola Prestasi -->
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/prestasi') ?>" class="menu-link <?= ($segment2 == 'prestasi') ? 'active' : '' ?>">
+                <i class="bi bi-trophy"></i>
+                <span>Kelola Prestasi</span>
+            </a>
+        </li>
+        
+        <!-- Kelola Tugas -->
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/tugas') ?>" class="menu-link <?= ($segment2 == 'tugas') ? 'active' : '' ?>">
+                <i class="bi bi-list-task"></i>
+                <span>Kelola Tugas</span>
+            </a>
+        </li>
+        
+        <!-- Kelola PJLP -->
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/pjlp') ?>" class="menu-link <?= ($segment2 == 'pjlp') ? 'active' : '' ?>">
+                <i class="bi bi-people"></i>
+                <span>Kelola PJLP</span>
+            </a>
+        </li>
+        
+        <!-- Kelola Chatbot -->
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/chatbot') ?>" class="menu-link <?= ($segment2 == 'chatbot') ? 'active' : '' ?>">
+                <i class="bi bi-robot"></i>
+                <span>Kelola Chatbot</span>
+            </a>
+        </li>
+        
+        <!-- Section: Sistem -->
+        <li class="menu-section">Sistem</li>
+        
+        <!-- Pengaturan -->
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/pengaturan') ?>" class="menu-link <?= ($segment2 == 'pengaturan') ? 'active' : '' ?>">
+                <i class="bi bi-gear"></i>
+                <span>Pengaturan</span>
+            </a>
+        </li>
+        
+        <!-- Kembali ke Website -->
+        <li class="menu-item" style="margin-top: 24px;">
+            <a href="<?= base_url('/') ?>" class="menu-link" target="_blank">
+                <i class="bi bi-box-arrow-up-right"></i>
+                <span>Lihat Website</span>
             </a>
         </li>
     </ul>
 </aside>
-<!-- / Menu -->

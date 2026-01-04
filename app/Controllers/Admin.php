@@ -12,50 +12,93 @@ class Admin extends BaseController
     {
         $this->userModel = new UserModel();
     }
-    public function index(): string
+
+    // Dashboard
+    public function index()
     {
         $id = session()->get('id');
-        $user = $this->userModel->find($id);
-        return view('admin/index');
+        if (!$id) return redirect()->to('/login'); // Double check
+
+        // Data user tidak harus dikirim ke view index jika view tidak butuh, 
+        // tapi bagus untuk menampilkan "Halo, [Nama]"
+        $user = $this->userModel->find($id); 
+        
+        $visitorModel = new \App\Models\VisitorModel();
+        $beritaModel = new \App\Models\BeritaModel();
+        $prestasiModel = new \App\Models\BerandaModel(); // Maps to 'prestasi' table
+
+        $stats = $visitorModel->getStats();
+        
+        return view('admin/index', [
+            'user' => $user,
+            'stats' => $stats,
+            'total_berita' => $beritaModel->countAllResults(),
+            'total_prestasi' => $prestasiModel->countAllResults()
+        ]);
     }
+
+    // Page Management Listing
     public function halaman(): string
     {
         return view('admin/halaman');
     }
+
+    // Berita Management Listing
     public function berita(): string
     {
         return view('admin/berita');
     }
-    public function pengaturan($id): string
+
+    // Settings Page
+    public function pengaturan()
     {
+        $id = session()->get('id');
+        if (!$id) return redirect()->to('/login');
+
         $user = $this->userModel->find($id);
 
+        if (!$user) {
+            // Jika user di session tidak ada di DB (misal dihapus saat sesi aktif)
+            session()->destroy();
+            return redirect()->to('/login');
+        }
+
+        $visitorModel = new \App\Models\VisitorModel();
+        $stats = $visitorModel->getStats();
+
         return view('admin/pengaturan', [
-            'user' => $user
+            'user' => $user,
+            'stats' => $stats
         ]);
     }
-    public function update($id)
+
+    // Update Profile
+    public function update()
     {
+        $id = session()->get('id');
+        if (!$id) return redirect()->to('/login');
+
         $user = $this->userModel->find($id);
+        if (!$user) return redirect()->to('/login');
 
         $data = [
             'nama'     => $this->request->getPost('nama'),
             'username' => $this->request->getPost('username'),
-            'email'    => $user['email'],
-            'notelp'    => $this->request->getPost('notelp')
+            // Email tidak diupdate untuk keamanan, atau butuh verifikasi khusus
+            'email'    => $user['email'], 
+            'notelp'   => $this->request->getPost('notelp')
         ];
 
-        // Password opsional
-        // if ($this->request->getPost('password')) {
-        //     $data['password'] = password_hash(
-        //         $this->request->getPost('password'),
-        //         PASSWORD_DEFAULT
-        //     );
-        // }
+        // Validasi Password Opsional
+        $password = $this->request->getPost('password');
+        if (!empty($password)) {
+            // Jika password diisi, hash dan update
+            $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+        }
 
         $this->userModel->update($id, $data);
 
-        return redirect()->to('/pengaturan/' . session()->get('id'))
-            ->with('success', 'Data admin berhasil diperbarui');
+        return redirect()->to('/admin/pengaturan')
+            ->with('success', 'Profil admin berhasil diperbarui');
     }
 }
