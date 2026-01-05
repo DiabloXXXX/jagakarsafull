@@ -26,14 +26,14 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => getenv('DB_HOST') ?: 'localhost',
-        'username'     => getenv('DB_USERNAME') ?: 'root',
-        'password'     => getenv('DB_PASSWORD') ?: '',
-        'database'     => getenv('DB_DATABASE') ?: 'jagakarsa',
+        'hostname'     => 'localhost',
+        'username'     => 'root',
+        'password'     => '',
+        'database'     => 'jagakarsa',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
-        'DBDebug'      => (ENVIRONMENT !== 'production'),
+        'DBDebug'      => true,
         'charset'      => 'utf8mb4',
         'DBCollat'     => 'utf8mb4_general_ci',
         'swapPre'      => '',
@@ -41,7 +41,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => getenv('DB_PORT') ?: 3306,
+        'port'         => 3306,
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [
@@ -50,6 +50,31 @@ class Database extends Config
             'time'     => 'H:i:s',
         ],
     ];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Override with environment variables if available
+        if ($host = getenv('DB_HOST')) {
+            $this->default['hostname'] = $host;
+        }
+        if ($username = getenv('DB_USERNAME')) {
+            $this->default['username'] = $username;
+        }
+        if ($password = getenv('DB_PASSWORD')) {
+            $this->default['password'] = $password;
+        }
+        if ($database = getenv('DB_DATABASE')) {
+            $this->default['database'] = $database;
+        }
+        if ($port = getenv('DB_PORT')) {
+            $this->default['port'] = (int) $port;
+        }
+        if (ENVIRONMENT === 'production') {
+            $this->default['DBDebug'] = false;
+        }
+    }
 
     //    /**
     //     * Sample database connection for SQLite3.
