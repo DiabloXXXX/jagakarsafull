@@ -31,5 +31,5 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Expose port
 EXPOSE 8080
 
-# Start PHP server
-CMD php -S 0.0.0.0:8080 -t public
+# Start PHP server - use sh to properly expand PORT variable
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t public"]
