@@ -24,8 +24,15 @@ class Pjlp extends BaseController
 
     public function store()
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->withInput()->with('error', 'Token keamanan tidak valid');
+        }
+        
         $rules = [
             'title' => 'required|min_length[3]|max_length[255]',
+            'personil_count' => 'permit_empty|numeric',
+            'status' => 'permit_empty|in_list[publish,draft]',
         ];
         
         if (!$this->validate($rules)) {
@@ -63,8 +70,21 @@ class Pjlp extends BaseController
 
     public function update($id)
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->withInput()->with('error', 'Token keamanan tidak valid');
+        }
+        
+        // Cek apakah PJLP exists
+        $pjlp = $this->pjlpModel->find($id);
+        if (!$pjlp) {
+            return redirect()->back()->with('error', 'PJLP tidak ditemukan');
+        }
+        
         $rules = [
             'title' => 'required|min_length[3]|max_length[255]',
+            'personil_count' => 'permit_empty|numeric',
+            'status' => 'permit_empty|in_list[publish,draft]',
         ];
         
         if (!$this->validate($rules)) {
@@ -102,12 +122,23 @@ class Pjlp extends BaseController
 
     public function delete($id)
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->with('error', 'Token keamanan tidak valid');
+        }
+        
         $pjlp = $this->pjlpModel->find($id);
         if (!$pjlp) {
             return redirect()->back()->with('error', 'PJLP tidak ditemukan');
         }
-        $this->pjlpModel->delete($id);
-        ActivityLogModel::log('delete', 'pjlp', 'Menghapus PJLP: ' . ($pjlp['title'] ?? 'ID ' . $id));
-        return redirect()->back()->with('success', 'PJLP berhasil dihapus');
+        
+        try {
+            $this->pjlpModel->delete($id);
+            ActivityLogModel::log('delete', 'pjlp', 'Menghapus PJLP: ' . ($pjlp['title'] ?? 'ID ' . $id));
+            return redirect()->back()->with('success', 'PJLP berhasil dihapus');
+        } catch (\Exception $e) {
+            log_message('error', 'Failed to delete PJLP: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus PJLP');
+        }
     }
 }

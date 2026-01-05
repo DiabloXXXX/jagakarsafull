@@ -25,9 +25,15 @@ class Beranda extends BaseController
 
     public function store()
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->withInput()->with('error', 'Token keamanan tidak valid');
+        }
+        
         // Validasi input
         $rules = [
             'judul' => 'required|min_length[3]|max_length[255]',
+            'status' => 'permit_empty|in_list[publish,draft]',
         ];
         
         if (!$this->validate($rules)) {
@@ -78,9 +84,21 @@ class Beranda extends BaseController
 
     public function update($id)
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->withInput()->with('error', 'Token keamanan tidak valid');
+        }
+        
+        // Cek apakah prestasi exists
+        $prestasi = $this->berandaModel->find($id);
+        if (!$prestasi) {
+            return redirect()->back()->with('error', 'Prestasi tidak ditemukan');
+        }
+        
         // Validasi input
         $rules = [
             'judul' => 'required|min_length[3]|max_length[255]',
+            'status' => 'permit_empty|in_list[publish,draft]',
         ];
         
         if (!$this->validate($rules)) {
@@ -115,12 +133,32 @@ class Beranda extends BaseController
 
     public function delete($id)
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->with('error', 'Token keamanan tidak valid');
+        }
+        
         $prestasi = $this->berandaModel->find($id);
         if (!$prestasi) {
             return redirect()->back()->with('error', 'Prestasi tidak ditemukan');
         }
-        $this->berandaModel->delete($id);
-        ActivityLogModel::log('delete', 'prestasi', 'Menghapus prestasi: ' . ($prestasi['judul'] ?? 'ID ' . $id));
-        return redirect()->back()->with('success', 'Prestasi berhasil Dihapus');
+        
+        try {
+            // Hapus gambar jika ada
+            if (!empty($prestasi['gambar'])) {
+                $filePath = FCPATH . 'uploads/prestasi/' . $prestasi['gambar'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+            
+            $this->berandaModel->delete($id);
+            ActivityLogModel::log('delete', 'prestasi', 'Menghapus prestasi: ' . ($prestasi['judul'] ?? 'ID ' . $id));
+            
+            return redirect()->back()->with('success', 'Prestasi berhasil dihapus');
+        } catch (\Exception $e) {
+            log_message('error', 'Failed to delete prestasi: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus prestasi');
+        }
     }
 }

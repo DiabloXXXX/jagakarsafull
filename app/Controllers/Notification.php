@@ -106,33 +106,37 @@ class Notification extends BaseController
     }
 
     /**
-     * Send push notification to all subscribers (admin only)
+     * Admin view for sending notifications
+     */
+    public function adminIndex(): string
+    {
+        return view('admin/notification', [
+            'subscriber_count' => $this->subscriptionModel->getSubscriptionCount()
+        ]);
+    }
+
+    /**
+     * Send push notification to all subscribers (admin manual)
      */
     public function sendToAll(): ResponseInterface
     {
         // Verify admin session
-        if (!session()->get('logged_in')) {
+        if (!session()->get('isLoggedIn')) {
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'Unauthorized'
             ])->setStatusCode(401);
         }
 
-        $json = $this->request->getJSON(true);
-        
-        $title = $json['title'] ?? 'Kelurahan Jagakarsa';
-        $body = $json['body'] ?? 'Ada informasi baru!';
-        $url = $json['url'] ?? '/';
-        $icon = $json['icon'] ?? '/images/icons/icon-192x192.png';
-        $image = $json['image'] ?? null;
+        $title = $this->request->getPost('title') ?? 'Kelurahan Jagakarsa';
+        $body = $this->request->getPost('body') ?? 'Ada informasi baru!';
+        $url = $this->request->getPost('url') ?? base_url();
+        $icon = base_url('/images/icons/icon-192x192.png');
 
         $subscriptions = $this->subscriptionModel->getActiveSubscriptions();
         
         if (empty($subscriptions)) {
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'Tidak ada subscriber'
-            ]);
+            return redirect()->back()->with('error', 'Tidak ada subscriber aktif');
         }
 
         $payload = json_encode([
@@ -140,14 +144,12 @@ class Notification extends BaseController
             'body' => $body,
             'url' => $url,
             'icon' => $icon,
-            'image' => $image,
             'tag' => 'jagakarsa-' . time()
         ]);
 
         $sent = 0;
         $failed = 0;
-        $invalidEndpoints = [];
-
+        
         foreach ($subscriptions as $subscription) {
             $result = $this->sendPushNotification($subscription, $payload);
             if ($result['success']) {
@@ -155,23 +157,12 @@ class Notification extends BaseController
             } else {
                 $failed++;
                 if ($result['code'] === 410 || $result['code'] === 404) {
-                    // Subscription expired or not found, mark as inactive
-                    $invalidEndpoints[] = $subscription['endpoint'];
+                    $this->subscriptionModel->deactivateSubscription($subscription['endpoint']);
                 }
             }
         }
 
-        // Clean up invalid subscriptions
-        foreach ($invalidEndpoints as $endpoint) {
-            $this->subscriptionModel->deactivateSubscription($endpoint);
-        }
-
-        return $this->response->setJSON([
-            'success' => true,
-            'sent' => $sent,
-            'failed' => $failed,
-            'cleaned' => count($invalidEndpoints)
-        ]);
+        return redirect()->back()->with('success', "Berhasil mengirim {$sent} notifikasi. (Gagal: {$failed})");
     }
 
     /**
@@ -227,51 +218,41 @@ class Notification extends BaseController
         $subject = env('VAPID_SUBJECT', 'mailto:admin@jagakarsa.jakarta.go.id');
 
         if (empty($publicKey) || empty($privateKey)) {
+            log_message('error', 'Push notification failed: VAPID keys not configured');
             return ['success' => false, 'code' => 500, 'message' => 'VAPID keys not configured'];
         }
 
         try {
-            // Create JWT token for VAPID
-            $endpoint = $subscription['endpoint'];
-            $audience = parse_url($endpoint, PHP_URL_SCHEME) . '://' . parse_url($endpoint, PHP_URL_HOST);
-            
-            $header = json_encode(['typ' => 'JWT', 'alg' => 'ES256']);
-            $jwtPayload = json_encode([
-                'aud' => $audience,
-                'exp' => time() + 86400,
-                'sub' => $subject
-            ]);
-
-            // For proper Web Push, you'd need to implement ES256 signing
-            // For now, we'll use a simple HTTP request approach
-            // In production, use a library like minishlink/web-push
-            
-            $headers = [
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($payload),
-                'TTL: 86400'
+            $auth = [
+                'VAPID' => [
+                    'subject' => $subject,
+                    'publicKey' => $publicKey,
+                    'privateKey' => $privateKey,
+                ],
             ];
 
-            $ch = curl_init($endpoint);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            $webPush = new \Minishlink\WebPush\WebPush($auth);
             
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
+            $sub = \Minishlink\WebPush\Subscription::create([
+                'endpoint' => $subscription['endpoint'],
+                'publicKey' => $subscription['p256dh_key'],
+                'authToken' => $subscription['auth_key'],
+            ]);
 
-            // 201 = success, 410 = subscription expired, 404 = not found
-            if ($httpCode >= 200 && $httpCode < 300) {
-                return ['success' => true, 'code' => $httpCode];
+            $report = $webPush->sendOneNotification($sub, $payload);
+            
+            if ($report->isSuccess()) {
+                return ['success' => true, 'code' => 200];
+            } else {
+                return [
+                    'success' => false, 
+                    'code' => $report->getResponse()->getStatusCode(), 
+                    'message' => $report->getReason()
+                ];
             }
 
-            return ['success' => false, 'code' => $httpCode, 'message' => $response];
-
         } catch (\Exception $e) {
+            log_message('error', 'Push notification error: ' . $e->getMessage());
             return ['success' => false, 'code' => 500, 'message' => $e->getMessage()];
         }
     }

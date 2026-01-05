@@ -105,6 +105,10 @@ $routes->group('admin', ['filter' => 'authGuard'], function ($routes) {
         $routes->post('editberanda-content/update', 'Admin\Halaman::berandaupdate');
     });
 
+    // Notifications
+    $routes->get('notification', 'Notification::adminIndex');
+    $routes->post('notification/send', 'Notification::sendToAll');
+
     // Settings
     $routes->get('pengaturan', 'Admin::pengaturan'); // URL: /admin/pengaturan
     $routes->post('user/update', 'Admin::update');

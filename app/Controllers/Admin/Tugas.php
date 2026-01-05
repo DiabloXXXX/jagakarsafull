@@ -24,8 +24,14 @@ class Tugas extends BaseController
 
     public function store()
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->withInput()->with('error', 'Token keamanan tidak valid');
+        }
+        
         $rules = [
             'title' => 'required|min_length[3]|max_length[255]',
+            'status' => 'permit_empty|in_list[publish,draft]',
         ];
         
         if (!$this->validate($rules)) {
@@ -62,8 +68,20 @@ class Tugas extends BaseController
 
     public function update($id)
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->withInput()->with('error', 'Token keamanan tidak valid');
+        }
+        
+        // Cek apakah tugas exists
+        $tugas = $this->tugasModel->find($id);
+        if (!$tugas) {
+            return redirect()->back()->with('error', 'Tugas tidak ditemukan');
+        }
+        
         $rules = [
             'title' => 'required|min_length[3]|max_length[255]',
+            'status' => 'permit_empty|in_list[publish,draft]',
         ];
         
         if (!$this->validate($rules)) {
@@ -100,12 +118,23 @@ class Tugas extends BaseController
 
     public function delete($id)
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->with('error', 'Token keamanan tidak valid');
+        }
+        
         $tugas = $this->tugasModel->find($id);
         if (!$tugas) {
             return redirect()->back()->with('error', 'Tugas tidak ditemukan');
         }
-        $this->tugasModel->delete($id);
-        ActivityLogModel::log('delete', 'tugas', 'Menghapus tugas: ' . ($tugas['title'] ?? 'ID ' . $id));
-        return redirect()->back()->with('success', 'Tugas berhasil dihapus');
+        
+        try {
+            $this->tugasModel->delete($id);
+            ActivityLogModel::log('delete', 'tugas', 'Menghapus tugas: ' . ($tugas['title'] ?? 'ID ' . $id));
+            return redirect()->back()->with('success', 'Tugas berhasil dihapus');
+        } catch (\Exception $e) {
+            log_message('error', 'Failed to delete tugas: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus tugas');
+        }
     }
 }

@@ -59,8 +59,9 @@ class Admin extends BaseController
 
         if (!$user) {
             // Jika user di session tidak ada di DB (misal dihapus saat sesi aktif)
+            log_message('warning', 'User ID in session not found in database: ' . $id);
             session()->destroy();
-            return redirect()->to('/login');
+            return redirect()->to('/login')->with('msg', 'Akun tidak ditemukan. Silakan login kembali.');
         }
 
         $visitorModel = new \App\Models\VisitorModel();
@@ -79,26 +80,55 @@ class Admin extends BaseController
         if (!$id) return redirect()->to('/login');
 
         $user = $this->userModel->find($id);
-        if (!$user) return redirect()->to('/login');
+        if (!$user) {
+            session()->destroy();
+            return redirect()->to('/login');
+        }
+
+        // Validasi input
+        $rules = [
+            'nama'     => 'required|min_length[3]|max_length[100]',
+            'username' => 'required|min_length[3]|max_length[50]|alpha_numeric',
+            'notelp'   => 'permit_empty|numeric|min_length[10]|max_length[15]',
+        ];
+        
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
 
         $data = [
-            'nama'     => $this->request->getPost('nama'),
-            'username' => $this->request->getPost('username'),
-            // Email tidak diupdate untuk keamanan, atau butuh verifikasi khusus
-            'email'    => $user['email'], 
-            'notelp'   => $this->request->getPost('notelp')
+            'nama'     => trim($this->request->getPost('nama')),
+            'username' => trim($this->request->getPost('username')),
+            'email'    => $user['email'], // Email tidak diupdate untuk keamanan
+            'notelp'   => trim($this->request->getPost('notelp'))
         ];
 
         // Validasi Password Opsional
         $password = $this->request->getPost('password');
         if (!empty($password)) {
-            // Jika password diisi, hash dan update
+            // Validasi password strength
+            if (strlen($password) < 8) {
+                return redirect()->back()->withInput()
+                    ->with('error', 'Password minimal 8 karakter');
+            }
             $data['password'] = password_hash($password, PASSWORD_DEFAULT);
         }
 
-        $this->userModel->update($id, $data);
-
-        return redirect()->to('/admin/pengaturan')
-            ->with('success', 'Profil admin berhasil diperbarui');
+        try {
+            $this->userModel->update($id, $data);
+            
+            // Update session data
+            session()->set([
+                'username' => $data['username'],
+                'nama'     => $data['nama']
+            ]);
+            
+            return redirect()->to('/admin/pengaturan')
+                ->with('success', 'Profil admin berhasil diperbarui');
+        } catch (\Exception $e) {
+            log_message('error', 'Failed to update user profile: ' . $e->getMessage());
+            return redirect()->back()->withInput()
+                ->with('error', 'Gagal memperbarui profil. Silakan coba lagi.');
+        }
     }
 }

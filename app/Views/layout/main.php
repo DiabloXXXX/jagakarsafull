@@ -119,10 +119,28 @@
         .card-modern {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             will-change: transform, box-shadow;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        .card-modern:hover::before {
+            left: 100%;
         }
         .card-modern:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2);
+        }
+        .card-modern:active {
+            transform: translateY(-8px) scale(1.01);
         }
         
         /* Image Loading Effect */
@@ -149,6 +167,23 @@
         .btn-ripple {
             position: relative;
             overflow: hidden;
+            transform: translateZ(0);
+        }
+        .btn-ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn-ripple:hover::before {
+            width: 300px;
+            height: 300px;
         }
         .btn-ripple::after {
             content: '';
@@ -158,7 +193,7 @@
             top: 0;
             left: 0;
             pointer-events: none;
-            background-image: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 10%);
+            background-image: radial-gradient(circle, rgba(255,255,255,0.4) 10%, transparent 10%);
             background-repeat: no-repeat;
             background-position: 50%;
             transform: scale(10);
@@ -182,6 +217,7 @@
         .link-animated {
             position: relative;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
         .link-animated::after {
             content: '';
@@ -191,10 +227,31 @@
             bottom: -2px;
             left: 0;
             background: currentColor;
-            transition: width 0.3s ease;
+            transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .link-animated:hover {
+            color: inherit;
         }
         .link-animated:hover::after {
             width: 100%;
+        }
+        .link-animated::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: currentColor;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .link-animated:hover::before {
+            opacity: 0.1;
+            transform: scale(1);
         }
         
         /* Glassmorphism Effect */
@@ -268,7 +325,13 @@
 
 <body>
     <!-- Scroll Progress Bar -->
-    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="scroll-progress" 
+         id="scrollProgress" 
+         role="progressbar" 
+         aria-label="Progres scroll halaman"
+         aria-valuemin="0" 
+         aria-valuemax="100" 
+         aria-valuenow="0"></div>
     
     <!-- Global Preloader -->
     <style>
@@ -767,6 +830,7 @@
             const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const progress = (scrollTop / scrollHeight) * 100;
             scrollProgress.style.width = progress + '%';
+            scrollProgress.setAttribute('aria-valuenow', Math.round(progress));
         });
 
         // Image Lazy Loading with Blur-up Effect
@@ -795,7 +859,7 @@
             });
         });
 
-        // Smooth reveal for cards on scroll
+        // Smooth reveal for cards on scroll with stagger effect
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -806,14 +870,16 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    entry.target.setAttribute('aria-hidden', 'false');
                 }
             });
         }, observerOptions);
         
-        document.querySelectorAll('.card-modern').forEach(card => {
+        document.querySelectorAll('.card-modern').forEach((card, index) => {
             card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
+            card.setAttribute('aria-hidden', 'true');
             observer.observe(card);
         });
 

@@ -53,10 +53,16 @@ class Berita extends BaseController
 
     public function store()
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->withInput()->with('error', 'Token keamanan tidak valid');
+        }
+        
         // Validasi input
         $rules = [
             'judul' => 'required|min_length[3]|max_length[255]',
             'konten' => 'required|min_length[10]',
+            'status' => 'permit_empty|in_list[publish,draft]',
         ];
         
         if (!$this->validate($rules)) {
@@ -109,10 +115,22 @@ class Berita extends BaseController
 
     public function update($id)
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->withInput()->with('error', 'Token keamanan tidak valid');
+        }
+        
+        // Cek apakah berita exists
+        $berita = $this->beritaModel->find($id);
+        if (!$berita) {
+            return redirect()->to('/admin/berita')->with('error', 'Berita tidak ditemukan');
+        }
+        
         // Validasi input
         $rules = [
             'judul' => 'required|min_length[3]|max_length[255]',
             'konten' => 'required|min_length[10]',
+            'status' => 'permit_empty|in_list[publish,draft]',
         ];
         
         if (!$this->validate($rules)) {
@@ -149,12 +167,32 @@ class Berita extends BaseController
 
     public function delete($id)
     {
+        // Validasi CSRF
+        if (!$this->validate(['csrf_test_name' => 'required'])) {
+            return redirect()->back()->with('error', 'Token keamanan tidak valid');
+        }
+        
         $berita = $this->beritaModel->find($id);
         if (!$berita) {
             return redirect()->back()->with('error', 'Berita tidak ditemukan');
         }
-        $this->beritaModel->delete($id);
-        ActivityLogModel::log('delete', 'berita', 'Menghapus berita: ' . ($berita['judul'] ?? 'ID ' . $id));
-        return redirect()->back()->with('success', 'Berita berhasil dihapus');
+        
+        try {
+            // Hapus gambar jika ada
+            if (!empty($berita['gambar'])) {
+                $filePath = FCPATH . 'uploads/berita/' . $berita['gambar'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+            
+            $this->beritaModel->delete($id);
+            ActivityLogModel::log('delete', 'berita', 'Menghapus berita: ' . ($berita['judul'] ?? 'ID ' . $id));
+            
+            return redirect()->back()->with('success', 'Berita berhasil dihapus');
+        } catch (\Exception $e) {
+            log_message('error', 'Failed to delete berita: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus berita');
+        }
     }
 }

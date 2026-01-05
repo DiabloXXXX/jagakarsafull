@@ -1,45 +1,153 @@
-(function ($) {
+(function () {
     "use strict";
     
-    // Dropdown on mouse hover
-    $(document).ready(function () {
-        function toggleNavbarMethod() {
-            if ($(window).width() > 992) {
-                $('.navbar .dropdown').on('mouseover', function () {
-                    $('.dropdown-toggle', this).trigger('click');
-                }).on('mouseout', function () {
-                    $('.dropdown-toggle', this).trigger('click').blur();
+    // Dropdown on mouse hover - Modern vanilla JS
+    function toggleNavbarMethod() {
+        const dropdowns = document.querySelectorAll('.navbar .dropdown');
+        
+        if (window.innerWidth > 992) {
+            dropdowns.forEach(dropdown => {
+                const toggle = dropdown.querySelector('.dropdown-toggle');
+                
+                dropdown.addEventListener('mouseenter', () => {
+                    if (toggle) {
+                        toggle.click();
+                        toggle.setAttribute('aria-expanded', 'true');
+                    }
                 });
-            } else {
-                $('.navbar .dropdown').off('mouseover').off('mouseout');
-            }
-        }
-        toggleNavbarMethod();
-        $(window).resize(toggleNavbarMethod);
-    });
-
-
-    // Date and time picker
-    $('.date').datetimepicker({
-        format: 'L'
-    });
-    $('.time').datetimepicker({
-        format: 'LT'
-    });
-    
-    
-    // Back to top button
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-            $('.back-to-top').fadeIn('slow');
+                
+                dropdown.addEventListener('mouseleave', () => {
+                    if (toggle) {
+                        toggle.click();
+                        toggle.blur();
+                        toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
         } else {
-            $('.back-to-top').fadeOut('slow');
+            dropdowns.forEach(dropdown => {
+                dropdown.replaceWith(dropdown.cloneNode(true));
+            });
         }
+    }
+    
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+        toggleNavbarMethod();
     });
-    $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
-        return false;
+    
+    // Re-initialize on resize with debounce
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(toggleNavbarMethod, 250);
     });
+    
+    // Back to top button - Smooth with requestAnimationFrame
+    const backToTop = document.querySelector('.back-to-top');
+    
+    if (backToTop) {
+        // Show/hide on scroll with throttle
+        let lastScroll = 0;
+        let ticking = false;
+        
+        window.addEventListener('scroll', () => {
+            lastScroll = window.pageYOffset;
+            
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    if (lastScroll > 100) {
+                        backToTop.style.display = 'block';
+                        backToTop.style.animation = 'slideInUp 0.5s ease-out';
+                    } else {
+                        backToTop.style.display = 'none';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        
+        // Smooth scroll to top
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const scrollDuration = 1000;
+            const scrollStep = -window.pageYOffset / (scrollDuration / 15);
+            
+            const scrollInterval = setInterval(() => {
+                if (window.pageYOffset !== 0) {
+                    window.scrollBy(0, scrollStep);
+                } else {
+                    clearInterval(scrollInterval);
+                }
+            }, 15);
+        });
+    }
+    
+    // Enhanced Image Loading with Intersection Observer
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px'
+        });
+        
+        images.forEach(img => {
+            img.classList.add('img-blur-up');
+            imageObserver.observe(img);
+        });
+    }
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '#!') return;
+            
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Add active state to navigation on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+})();
 
 
     // Price carousel

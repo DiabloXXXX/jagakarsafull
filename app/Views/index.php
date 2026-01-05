@@ -34,12 +34,18 @@ $gambarPeta = !empty($h['gambar_peta']) ? 'uploads/halaman/' . $h['gambar_peta']
         class="relative h-96 md:h-[586px] bg-cover bg-center overflow-hidden" 
         data-aos="fade-in" 
         data-aos-duration="1200"
+        role="banner"
+        aria-label="Hero section Kelurahan Jagakarsa"
     >
+        <!-- Skeleton loader -->
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse" id="heroSkeleton"></div>
+        
         <img
             src="<?= base_url($heroImage) ?>"
             alt="Kelurahan Jagakarsa"
-            class="w-full h-full object-cover transition-transform duration-[10s] hover:scale-110"
+            class="w-full h-full object-cover transition-all duration-[10s] hover:scale-110"
             loading="eager"
+            onload="document.getElementById('heroSkeleton').style.display='none'"
         />
         <!-- Gradient Overlay -->
         <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
@@ -63,22 +69,31 @@ $gambarPeta = !empty($h['gambar_peta']) ? 'uploads/halaman/' . $h['gambar_peta']
             <button 
                 onclick="document.getElementById('tentang').scrollIntoView({ behavior: 'smooth' })"
                 class="btn-ripple pulse-animation bg-[#FF9800] hover:bg-orange-600 text-white font-semibold py-3 px-16 rounded-full flex items-center gap-3 transition-all transform hover:scale-105 shadow-lg text-2xl cursor-pointer border-none"
-                data-aos="fade-up" data-aos-delay="400"
+                data-aos="fade-up" 
+                data-aos-delay="400"
+                aria-label="Gulir ke bagian tentang kelurahan"
+                type="button"
             >
                 Lihat Beranda
-                <i class="fas fa-arrow-right text-2xl"></i>
+                <i class="fas fa-arrow-right text-2xl" aria-hidden="true"></i>
             </button>
         </div>
     </section>
 
     <!-- About Content Section -->
-    <section id="tentang" class="py-12 sm:py-16 md:py-24 bg-white scroll-mt-28" data-aos="fade-up">
+    <section 
+        id="tentang" 
+        class="py-12 sm:py-16 md:py-24 bg-white scroll-mt-28" 
+        data-aos="fade-up"
+        role="region"
+        aria-labelledby="tentang-heading"
+    >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-8 max-w-4xl mx-auto">
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold gradient-text mb-4">
+                <h2 id="tentang-heading" class="text-3xl sm:text-4xl md:text-5xl font-extrabold gradient-text mb-4">
                     <?= esc($tentangTitle) ?>
                 </h2>
-                <div class="h-1 w-24 bg-gradient-to-r from-[#225808] via-[#99BD49] to-[#FF9800] mx-auto rounded-full"></div>
+                <div class="h-1 w-24 bg-gradient-to-r from-[#225808] via-[#99BD49] to-[#FF9800] mx-auto rounded-full" aria-hidden="true"></div>
             </div>
             <div class="text-base sm:text-lg md:text-xl text-gray-800 leading-relaxed space-y-4 sm:space-y-6 text-center max-w-4xl mx-auto font-medium">
                 <p data-aos="fade-up" data-aos-delay="100">
@@ -95,9 +110,14 @@ $gambarPeta = !empty($h['gambar_peta']) ? 'uploads/halaman/' . $h['gambar_peta']
     </section>
 
     <!-- Boundaries Section -->
-    <section class="py-12 sm:py-16 md:py-24 bg-primary-lighter" data-aos="fade-up">
+    <section 
+        class="py-12 sm:py-16 md:py-24 bg-primary-lighter" 
+        data-aos="fade-up"
+        role="region"
+        aria-labelledby="batas-heading"
+    >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-dark mb-8 sm:mb-12">Batas Wilayah Kelurahan</h2>
+            <h2 id="batas-heading" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-dark mb-8 sm:mb-12">Batas Wilayah Kelurahan</h2>
 
             <div class="grid md:grid-cols-2 gap-8 md:gap-12">
                 <!-- Boundaries List -->
@@ -110,22 +130,28 @@ $gambarPeta = !empty($h['gambar_peta']) ? 'uploads/halaman/' . $h['gambar_peta']
                     <?php endforeach; ?>
 
                     <!-- Map Button -->
-                    <a href="https://maps.google.com/?q=Kelurahan+Jagakarsa" target="_blank"
-                        class="mt-6 sm:mt-8 bg-primary-light hover:bg-primary-dark text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg flex items-center gap-2 sm:gap-3 transition-all transform hover:scale-105 text-sm sm:text-base md:text-2xl w-max no-underline"
+                    <a href="https://maps.google.com/?q=Kelurahan+Jagakarsa" 
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="mt-6 sm:mt-8 bg-primary-light hover:bg-primary-dark text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg flex items-center gap-2 sm:gap-3 transition-all transform hover:scale-105 text-sm sm:text-base md:text-2xl w-max no-underline"
+                       aria-label="Buka peta Kelurahan Jagakarsa di Google Maps (buka di tab baru)"
                     >
-                        <i class="fas fa-map-marker-alt sm:w-7 sm:h-7 text-xl"></i>
+                        <i class="fas fa-map-marker-alt sm:w-7 sm:h-7 text-xl" aria-hidden="true"></i>
                         Lihat di Maps
                     </a>
                 </div>
 
                 <!-- Map Image -->
                 <div class="flex items-center justify-center">
-                    <div class="w-full rounded-3xl shadow-lg overflow-hidden">
+                    <div class="w-full rounded-3xl shadow-lg overflow-hidden relative">
+                        <!-- Skeleton loader -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse" id="mapSkeleton"></div>
                         <img
                             src="<?= base_url($gambarPeta) ?>"
                             alt="Peta Kelurahan Jagakarsa"
                             class="w-full h-48 sm:h-64 md:h-96 object-cover transform hover:scale-105 transition-transform duration-500"
                             loading="lazy"
+                            onload="const skeleton = document.getElementById('mapSkeleton'); if(skeleton) skeleton.style.display='none';"
                         />
                     </div>
                 </div>
@@ -134,23 +160,35 @@ $gambarPeta = !empty($h['gambar_peta']) ? 'uploads/halaman/' . $h['gambar_peta']
     </section>
 
     <!-- Achievements Section -->
-    <section class="py-12 sm:py-16 md:py-24 bg-white" data-aos="fade-up">
+    <section 
+        class="py-12 sm:py-16 md:py-24 bg-white" 
+        data-aos="fade-up"
+        role="region"
+        aria-labelledby="prestasi-heading"
+    >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-black mb-8 sm:mb-12">Prestasi Kelurahan Jagakarsa</h2>
+            <h2 id="prestasi-heading" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-black mb-8 sm:mb-12">Prestasi Kelurahan Jagakarsa</h2>
 
-            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8" role="list">
                 <?php $delay = 0; foreach ($prestasi as $p): ?>
-                    <div class="card-modern bg-white rounded-3xl overflow-hidden shadow-lg group" data-aos="fade-up" data-aos-delay="<?= $delay ?>">
+                    <article class="card-modern bg-white rounded-3xl overflow-hidden shadow-lg group" 
+                             data-aos="fade-up" 
+                             data-aos-delay="<?= $delay ?>"
+                             role="listitem"
+                             aria-label="Prestasi: <?= esc($p['judul']) ?>">
                         <!-- Image -->
                         <div class="relative h-40 sm:h-48 md:h-64 overflow-hidden border-2 border-black">
+                            <!-- Skeleton loader -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse prestasi-skeleton-<?= $p['id'] ?>"></div>
                             <img
                                 src="<?= base_url('uploads/prestasi/' . $p['gambar']) ?>"
                                 alt="<?= esc($p['judul']) ?>"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                 loading="lazy"
+                                onload="const skeleton = this.previousElementSibling; if(skeleton) skeleton.style.display='none';"
                             />
                             <!-- Gradient Overlay on Hover -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>
                         </div>
 
                         <!-- Content -->
@@ -162,19 +200,23 @@ $gambarPeta = !empty($h['gambar_peta']) ? 'uploads/halaman/' . $h['gambar_peta']
                                 <?= esc($p['judul']) ?>
                             </h3>
                             <p class="text-xs sm:text-sm md:text-xl text-gray-600 flex items-center gap-2">
-                                <i class="far fa-calendar-alt"></i>
-                                <?= date('d M Y', strtotime($p['created_at'])) ?>
+                                <i class="far fa-calendar-alt" aria-hidden="true"></i>
+                                <time datetime="<?= date('Y-m-d', strtotime($p['created_at'])) ?>">
+                                    <?= date('d M Y', strtotime($p['created_at'])) ?>
+                                </time>
                             </p>
 
                             <!-- Action Button -->
                             <button 
                                 onclick="alert('<?= esc($p['judul']) ?>')"
                                 class="btn-ripple w-full bg-primary-light hover:bg-primary-dark text-black hover:text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-all text-xs sm:text-sm md:text-2xl cursor-pointer"
+                                aria-label="Lihat detail prestasi: <?= esc($p['judul']) ?>"
+                                type="button"
                             >
                                 Lihat Selengkapnya
                             </button>
                         </div>
-                    </div>
+                    </article>
                 <?php $delay += 100; endforeach; ?>
             </div>
         </div>

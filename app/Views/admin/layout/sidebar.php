@@ -71,6 +71,14 @@
                 <span>Kelola Chatbot</span>
             </a>
         </li>
+
+        <!-- Kelola Notifikasi -->
+        <li class="menu-item">
+            <a href="<?= base_url('/admin/notification') ?>" class="menu-link <?= ($segment2 == 'notification') ? 'active' : '' ?>">
+                <i class="bi bi-bell-fill"></i>
+                <span>Kelola Notifikasi</span>
+            </a>
+        </li>
         
         <!-- Section: Sistem -->
         <li class="menu-section">Sistem</li>
