@@ -31,5 +31,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Expose port
 EXPOSE 8080
 
-# Start PHP server - use sh to properly expand PORT variable
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t public"]
+# Create a startup script to handle PORT variable
+RUN echo '#!/bin/sh\nphp -S 0.0.0.0:${PORT:-8080} -t public' > /start.sh && chmod +x /start.sh
+
+# Start PHP server
+CMD ["/start.sh"]
