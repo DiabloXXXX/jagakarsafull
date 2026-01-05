@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => '',
-        'database'     => 'jagakarsa',
+        'hostname'     => getenv('DB_HOST') ?: 'localhost',
+        'username'     => getenv('DB_USERNAME') ?: 'root',
+        'password'     => getenv('DB_PASSWORD') ?: '',
+        'database'     => getenv('DB_DATABASE') ?: 'jagakarsa',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -41,7 +41,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 3306,
+        'port'         => getenv('DB_PORT') ?: 3306,
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [
