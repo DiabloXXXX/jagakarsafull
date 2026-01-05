@@ -36,6 +36,28 @@ class Home extends BaseController
             ->findAll();
         
         $data['halaman'] = $this->halamanModel->first();
+        
+        // SEO Meta Data
+        $data['meta_title'] = 'Beranda';
+        $data['meta_description'] = 'Website Resmi Kelurahan Jagakarsa Jakarta Selatan. Informasi layanan publik, berita terkini, prestasi, dan kegiatan kelurahan. Melayani masyarakat dengan cepat, tepat, dan transparan.';
+        $data['meta_keywords'] = 'Kelurahan Jagakarsa, Jakarta Selatan, Layanan Kelurahan, Berita Kelurahan, Prestasi Kelurahan, Administrasi Kependudukan, Pelayanan Publik';
+        $data['canonical_url'] = base_url('/');
+        $data['og_type'] = 'website';
+        $data['og_image'] = base_url('images/features/hero-beranda.jpg');
+        
+        // Breadcrumb Schema
+        $data['breadcrumb_json'] = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Beranda',
+                    'item' => base_url('/')
+                ]
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
         return view('index', $data);
     }
@@ -48,18 +70,103 @@ class Home extends BaseController
             ->findAll();
         
         $data['halaman'] = $this->halamanModel->first();
+        
+        // SEO Meta Data
+        $data['meta_title'] = 'Tentang Kelurahan Jagakarsa';
+        $data['meta_description'] = 'Profil lengkap Kelurahan Jagakarsa Jakarta Selatan. Informasi sejarah, wilayah, batas wilayah, dan prestasi kelurahan. Komitmen melayani masyarakat dengan profesional.';
+        $data['meta_keywords'] = 'Tentang Kelurahan Jagakarsa, Profil Kelurahan, Sejarah Jagakarsa, Wilayah Kelurahan, Batas Wilayah, Prestasi Kelurahan';
+        $data['canonical_url'] = base_url('/tentang');
+        $data['og_type'] = 'website';
+        
+        // Breadcrumb Schema
+        $data['breadcrumb_json'] = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Beranda',
+                    'item' => base_url('/')
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Tentang',
+                    'item' => base_url('/tentang')
+                ]
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
         return view('tentang', $data);
     }
 
     public function visi(): string
     {
-        return view('visi');
+        $data['halaman'] = $this->halamanModel->first();
+        
+        // SEO Meta Data
+        $data['meta_title'] = 'Visi & Misi Kelurahan Jagakarsa';
+        $data['meta_description'] = 'Visi dan Misi Kelurahan Jagakarsa Jakarta Selatan. Komitmen mewujudkan pelayanan publik yang berkualitas, transparan, dan berorientasi pada kepuasan masyarakat.';
+        $data['meta_keywords'] = 'Visi Kelurahan Jagakarsa, Misi Kelurahan, Tujuan Kelurahan, Program Kelurahan, Pelayanan Publik';
+        $data['canonical_url'] = base_url('/visi');
+        $data['og_type'] = 'website';
+        
+        // Breadcrumb Schema
+        $data['breadcrumb_json'] = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Beranda',
+                    'item' => base_url('/')
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Visi & Misi',
+                    'item' => base_url('/visi')
+                ]
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        
+        return view('visi', $data);
     }
 
     public function struktur(): string
     {
-        return view('struktur');
+        $data['halaman'] = $this->halamanModel->first();
+        
+        // SEO Meta Data
+        $data['meta_title'] = 'Struktur Organisasi Kelurahan Jagakarsa';
+        $data['meta_description'] = 'Struktur Organisasi Kelurahan Jagakarsa Jakarta Selatan. Informasi lengkap tentang susunan organisasi, jabatan, dan tupoksi masing-masing bagian dalam pelayanan kepada masyarakat.';
+        $data['meta_keywords'] = 'Struktur Organisasi Kelurahan, Susunan Organisasi, Jabatan Kelurahan, Lurah Jagakarsa, Sekretaris Kelurahan';
+        $data['canonical_url'] = base_url('/struktur');
+        $data['og_type'] = 'website';
+        
+        // Breadcrumb Schema
+        $data['breadcrumb_json'] = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Beranda',
+                    'item' => base_url('/')
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Struktur Organisasi',
+                    'item' => base_url('/struktur')
+                ]
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        
+        return view('struktur', $data);
     }
 
     public function tugas(): string
@@ -80,7 +187,35 @@ class Home extends BaseController
             ];
         }
         
-        return view('tugas', ['tasks' => $tasks]);
+        // SEO Meta Data
+        $data['meta_title'] = 'Tugas & Fungsi Kelurahan Jagakarsa';
+        $data['meta_description'] = 'Tugas pokok dan fungsi Kelurahan Jagakarsa Jakarta Selatan. Penyelenggaraan pemerintahan, pembangunan, pembinaan kemasyarakatan, pemberdayaan masyarakat, dan pelayanan administrasi.';
+        $data['meta_keywords'] = 'Tugas Kelurahan, Fungsi Kelurahan, Tupoksi Kelurahan, Pelayanan Administrasi, Pemberdayaan Masyarakat';
+        $data['canonical_url'] = base_url('/tugas');
+        $data['og_type'] = 'website';
+        
+        // Breadcrumb Schema
+        $data['breadcrumb_json'] = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Beranda',
+                    'item' => base_url('/')
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Tugas & Fungsi',
+                    'item' => base_url('/tugas')
+                ]
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        
+        $data['tasks'] = $tasks;
+        return view('tugas', $data);
     }
 
     public function pjlp(): string

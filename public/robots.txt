@@ -2,3 +2,9 @@ User-agent: *
 Disallow: /admin
 Disallow: /auth
 Allow: /
+
+# Sitemap
+Sitemap: https://jagakarsajaksel.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10

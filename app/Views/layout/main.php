@@ -1,12 +1,48 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" prefix="og: https://ogp.me/ns#">
 
 <head>
     <meta charset="utf-8">
-    <title>Kelurahan Jagakarsa</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="keywords" content="Kelurahan Jagakarsa, Jakarta Selatan, Layanan Kelurahan, Berita Jagakarsa">
-    <meta name="description" content="Website Resmi Kelurahan Jagakarsa - Jakarta Selatan. Informasi layanan, berita, dan kegiatan kelurahan.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+    
+    <!-- Primary Meta Tags -->
+    <title><?= isset($meta_title) ? esc($meta_title) . ' | Kelurahan Jagakarsa' : 'Kelurahan Jagakarsa - Website Resmi Kelurahan Jagakarsa Jakarta Selatan' ?></title>
+    <meta name="title" content="<?= isset($meta_title) ? esc($meta_title) . ' | Kelurahan Jagakarsa' : 'Kelurahan Jagakarsa - Website Resmi Kelurahan Jagakarsa Jakarta Selatan' ?>">
+    <meta name="description" content="<?= isset($meta_description) ? esc($meta_description) : 'Website Resmi Kelurahan Jagakarsa - Jakarta Selatan. Informasi layanan publik, berita terkini, pengumuman, dan kegiatan kelurahan. Melayani masyarakat dengan transparansi dan profesional.' ?>">
+    <meta name="keywords" content="<?= isset($meta_keywords) ? esc($meta_keywords) : 'Kelurahan Jagakarsa, Jakarta Selatan, Layanan Kelurahan, Berita Kelurahan, Administrasi Kependudukan, Surat Keterangan, Pelayanan Publik, Kecamatan Jagakarsa' ?>">
+    <meta name="author" content="Kelurahan Jagakarsa">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?= isset($canonical_url) ? esc($canonical_url) : current_url() ?>">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="<?= isset($og_type) ? esc($og_type) : 'website' ?>">
+    <meta property="og:url" content="<?= isset($canonical_url) ? esc($canonical_url) : current_url() ?>">
+    <meta property="og:title" content="<?= isset($meta_title) ? esc($meta_title) . ' | Kelurahan Jagakarsa' : 'Kelurahan Jagakarsa - Website Resmi Kelurahan Jagakarsa Jakarta Selatan' ?>">
+    <meta property="og:description" content="<?= isset($meta_description) ? esc($meta_description) : 'Website Resmi Kelurahan Jagakarsa - Jakarta Selatan. Informasi layanan publik, berita terkini, pengumuman, dan kegiatan kelurahan.' ?>">
+    <meta property="og:image" content="<?= isset($og_image) ? esc($og_image) : base_url('images/og-default.jpg') ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="<?= isset($meta_title) ? esc($meta_title) : 'Kelurahan Jagakarsa' ?>">
+    <meta property="og:site_name" content="Kelurahan Jagakarsa">
+    <meta property="og:locale" content="id_ID">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="<?= isset($canonical_url) ? esc($canonical_url) : current_url() ?>">
+    <meta name="twitter:title" content="<?= isset($meta_title) ? esc($meta_title) . ' | Kelurahan Jagakarsa' : 'Kelurahan Jagakarsa - Website Resmi Kelurahan Jagakarsa Jakarta Selatan' ?>">
+    <meta name="twitter:description" content="<?= isset($meta_description) ? esc($meta_description) : 'Website Resmi Kelurahan Jagakarsa - Jakarta Selatan. Informasi layanan publik, berita terkini, pengumuman, dan kegiatan kelurahan.' ?>">
+    <meta name="twitter:image" content="<?= isset($og_image) ? esc($og_image) : base_url('images/og-default.jpg') ?>">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="geo.region" content="ID-JK">
+    <meta name="geo.placename" content="Jakarta Selatan">
+    <meta name="geo.position" content="-6.297389;106.826744">
+    <meta name="ICBM" content="-6.297389, 106.826744">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#225808">
@@ -75,6 +111,58 @@
     
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "GovernmentOrganization",
+        "name": "Kelurahan Jagakarsa",
+        "alternateName": "Lurah Jagakarsa",
+        "url": "<?= base_url() ?>",
+        "logo": "<?= base_url('images/logo-jagakarsa.png') ?>",
+        "image": "<?= base_url('images/og-default.jpg') ?>",
+        "description": "Website Resmi Kelurahan Jagakarsa - Jakarta Selatan. Informasi layanan publik, berita terkini, pengumuman, dan kegiatan kelurahan.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Jl. Jagakarsa",
+            "addressLocality": "Jagakarsa",
+            "addressRegion": "Jakarta Selatan",
+            "postalCode": "12620",
+            "addressCountry": "ID"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "-6.297389",
+            "longitude": "106.826744"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Service",
+            "areaServed": "ID",
+            "availableLanguage": "Indonesian"
+        },
+        "sameAs": [
+            "https://www.facebook.com/kelurahan.jagakarsa",
+            "https://www.instagram.com/kelurahan.jagakarsa",
+            "https://twitter.com/jagakarsalurah"
+        ]
+    }
+    </script>
+    
+    <?php if (isset($breadcrumb_json)): ?>
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    <?= $breadcrumb_json ?>
+    </script>
+    <?php endif; ?>
+    
+    <?php if (isset($article_json)): ?>
+    <!-- Article Structured Data -->
+    <script type="application/ld+json">
+    <?= $article_json ?>
+    </script>
+    <?php endif; ?>
 
     <style>
         html {
