@@ -207,14 +207,13 @@ $gambarPeta = !empty($h['gambar_peta']) ? 'uploads/halaman/' . $h['gambar_peta']
                             </p>
 
                             <!-- Action Button -->
-                            <button 
-                                onclick="alert('<?= esc($p['judul']) ?>')"
-                                class="btn-ripple w-full bg-primary-light hover:bg-primary-dark text-black hover:text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-all text-xs sm:text-sm md:text-2xl cursor-pointer"
+                            <a 
+                                href="<?= base_url('prestasi/' . $p['slug']) ?>"
+                                class="btn-ripple w-full bg-primary-light hover:bg-primary-dark text-black hover:text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-all text-xs sm:text-sm md:text-2xl inline-block text-center no-underline"
                                 aria-label="Lihat detail prestasi: <?= esc($p['judul']) ?>"
-                                type="button"
                             >
                                 Lihat Selengkapnya
-                            </button>
+                            </a>
                         </div>
                     </article>
                 <?php $delay += 100; endforeach; ?>

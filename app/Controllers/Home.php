@@ -271,6 +271,58 @@ class Home extends BaseController
         return view('detail-berita', ['berita' => $berita]);
     }
 
+    public function detail_prestasi($slug = null)
+    {
+        $prestasi = $this->berandaModel->where('slug', $slug)->first();
+
+        if (!$prestasi) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        // Get related prestasi (excluding current)
+        $data['prestasi_terkait'] = $this->berandaModel
+            ->where('status', 'publish')
+            ->where('slug !=', $slug)
+            ->orderBy('created_at', 'DESC')
+            ->findAll(3);
+
+        // SEO Meta Data
+        $data['prestasi'] = $prestasi;
+        $data['meta_title'] = esc($prestasi['judul']) . ' - Prestasi Kelurahan Jagakarsa';
+        $data['meta_description'] = 'Prestasi Kelurahan Jagakarsa: ' . esc($prestasi['judul']) . '. Pencapaian dan penghargaan yang diraih Kelurahan Jagakarsa Jakarta Selatan.';
+        $data['meta_keywords'] = 'Prestasi Kelurahan Jagakarsa, ' . esc($prestasi['judul']) . ', Penghargaan Kelurahan, Jakarta Selatan';
+        $data['canonical_url'] = base_url('/prestasi/' . $slug);
+        $data['og_type'] = 'article';
+        $data['og_image'] = base_url('uploads/prestasi/' . $prestasi['gambar']);
+        
+        // Breadcrumb Schema
+        $data['breadcrumb_json'] = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Beranda',
+                    'item' => base_url('/')
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Prestasi',
+                    'item' => base_url('/')
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 3,
+                    'name' => esc($prestasi['judul']),
+                    'item' => base_url('/prestasi/' . $slug)
+                ]
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        return view('detail-prestasi', $data);
+    }
 
     public function peta(): string
     {

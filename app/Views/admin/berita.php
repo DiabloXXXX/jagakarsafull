@@ -66,29 +66,41 @@
 <!-- Filter & Search -->
 <div class="card mb-4">
     <div class="card-body py-3">
-        <div class="row align-items-center g-3">
-            <div class="col-md-6">
-                <div class="position-relative">
-                    <i class="bi bi-search position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
-                    <input type="text" class="form-control ps-5" placeholder="Cari berita..." id="searchNews">
+        <form method="get" action="<?= base_url('/admin/berita') ?>" id="filterForm">
+            <div class="row align-items-center g-3">
+                <div class="col-md-6">
+                    <div class="position-relative">
+                        <i class="bi bi-search position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+                        <input type="text" name="search" class="form-control ps-5" placeholder="Cari berita..." id="searchNews" value="<?= esc($current_search ?? '') ?>">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select name="status" class="form-select" id="filterStatus">
+                        <option value="">Semua Status</option>
+                        <option value="publish" <?= ($current_status ?? '') === 'publish' ? 'selected' : '' ?>>Dipublikasi</option>
+                        <option value="draft" <?= ($current_status ?? '') === 'draft' ? 'selected' : '' ?>>Draft</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="kategori" class="form-select" id="filterCategory">
+                        <option value="">Semua Kategori</option>
+                        <option value="pengumuman" <?= ($current_kategori ?? '') === 'pengumuman' ? 'selected' : '' ?>>Pengumuman</option>
+                        <option value="kegiatan" <?= ($current_kategori ?? '') === 'kegiatan' ? 'selected' : '' ?>>Kegiatan</option>
+                        <option value="info" <?= ($current_kategori ?? '') === 'info' ? 'selected' : '' ?>>Informasi</option>
+                    </select>
                 </div>
             </div>
-            <div class="col-md-3">
-                <select class="form-select" id="filterStatus">
-                    <option value="">Semua Status</option>
-                    <option value="publish">Dipublikasi</option>
-                    <option value="draft">Draft</option>
-                </select>
+            <?php if (!empty($current_search) || !empty($current_status) || !empty($current_kategori)): ?>
+            <div class="mt-3">
+                <a href="<?= base_url('/admin/berita') ?>" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-x-circle me-1"></i>Reset Filter
+                </a>
+                <span class="text-muted ms-2">
+                    <small>Menampilkan <?= count($berita) ?> dari <?= $total_berita ?> berita</small>
+                </span>
             </div>
-            <div class="col-md-3">
-                <select class="form-select" id="filterCategory">
-                    <option value="">Semua Kategori</option>
-                    <option value="pengumuman">Pengumuman</option>
-                    <option value="kegiatan">Kegiatan</option>
-                    <option value="info">Informasi</option>
-                </select>
-            </div>
-        </div>
+            <?php endif; ?>
+        </form>
     </div>
 </div>
 
@@ -258,34 +270,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Client-side Search & Filter
-    const searchInput = document.getElementById('searchNews');
+    // Auto-submit form on filter change
+    const filterForm = document.getElementById('filterForm');
     const filterStatus = document.getElementById('filterStatus');
     const filterCategory = document.getElementById('filterCategory');
-    const tableBody = document.querySelector('.table tbody');
-    const tableRows = tableBody ? tableBody.querySelectorAll('tr:not(:last-child)') : [];
+    const searchNews = document.getElementById('searchNews');
     
-    function filterTable() {
-        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-        const statusFilter = filterStatus ? filterStatus.value.toLowerCase() : '';
-        
-        tableRows.forEach(row => {
-            const title = row.querySelector('td:first-child')?.textContent.toLowerCase() || '';
-            const status = row.querySelector('.badge-success, .badge-warning')?.textContent.toLowerCase() || '';
-            
-            const matchesSearch = title.includes(searchTerm);
-            const matchesStatus = !statusFilter || 
-                (statusFilter === 'publish' && status.includes('dipublikasi')) ||
-                (statusFilter === 'draft' && status.includes('draft'));
-            
-            row.style.display = matchesSearch && matchesStatus ? '' : 'none';
+    if (filterStatus) {
+        filterStatus.addEventListener('change', function() {
+            filterForm.submit();
         });
     }
     
-    if (searchInput) searchInput.addEventListener('input', filterTable);
-    if (filterStatus) filterStatus.addEventListener('change', filterTable);
-    if (filterCategory) filterCategory.addEventListener('change', filterTable);
+    if (filterCategory) {
+        filterCategory.addEventListener('change', function() {
+            filterForm.submit();
+        });
+    }
+    
+    // Submit on Enter key in search
+    if (searchNews) {
+        searchNews.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                filterForm.submit();
+            }
+        });
+        
+        // Optional: Auto-submit search after typing (with delay)
+        let searchTimeout;
+        searchNews.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                filterForm.submit();
+            }, 800);
+        });
+    }
 });
+</script>
 </script>
 
 <?= $this->endSection(); ?>

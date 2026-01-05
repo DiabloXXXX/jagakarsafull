@@ -18,14 +18,44 @@ class Berita extends BaseController
 
     public function index()
     {
-        $berita = $this->beritaModel->orderBy('created_at', 'DESC')->findAll();
+        // Get filter parameters from query string
+        $search = $this->request->getGet('search');
+        $status = $this->request->getGet('status');
+        $kategori = $this->request->getGet('kategori');
+        
+        // Build query
+        $builder = $this->beritaModel->orderBy('created_at', 'DESC');
+        
+        // Apply filters
+        if ($search) {
+            $builder->groupStart()
+                    ->like('judul', $search)
+                    ->orLike('konten', $search)
+                    ->groupEnd();
+        }
+        
+        if ($status) {
+            $builder->where('status', $status);
+        }
+        
+        if ($kategori) {
+            $builder->where('kategori', $kategori);
+        }
+        
+        $berita = $builder->findAll();
+        
+        // Get all berita for stats (without filters)
+        $allBerita = $this->beritaModel->findAll();
         
         return view('admin/berita', [
             'berita' => $berita,
-            'total_berita' => count($berita),
-            'published' => count(array_filter($berita, fn($b) => ($b['status'] ?? 'publish') === 'publish')),
-            'draft' => count(array_filter($berita, fn($b) => ($b['status'] ?? '') === 'draft')),
-            'total_views' => array_sum(array_column($berita, 'views'))
+            'total_berita' => count($allBerita),
+            'published' => count(array_filter($allBerita, fn($b) => ($b['status'] ?? 'publish') === 'publish')),
+            'draft' => count(array_filter($allBerita, fn($b) => ($b['status'] ?? '') === 'draft')),
+            'total_views' => array_sum(array_column($allBerita, 'views')),
+            'current_search' => $search,
+            'current_status' => $status,
+            'current_kategori' => $kategori
         ]);
     }
 

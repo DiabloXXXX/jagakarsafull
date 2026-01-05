@@ -36,16 +36,29 @@
                     <?= csrf_field() ?>
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" value="<?= esc($user['username'] ?? '') ?>">
+                            <label class="form-label fw-semibold">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" class="form-control" value="<?= esc($user['username'] ?? '') ?>" required>
+                            <small class="text-muted">Username untuk login</small>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Nama Lengkap</label>
-                            <input type="text" name="nama" class="form-control" value="<?= esc($user['nama'] ?? '') ?>">
+                            <label class="form-label fw-semibold">Nama Lengkap <span class="text-danger">*</span></label>
+                            <input type="text" name="nama" class="form-control" value="<?= esc($user['nama'] ?? '') ?>" required>
+                            <small class="text-muted">Nama yang akan ditampilkan</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                            <input type="email" name="email" class="form-control" value="<?= esc($user['email'] ?? '') ?>" required>
+                            <small class="text-muted">Email untuk notifikasi</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Jabatan</label>
+                            <input type="text" name="jabatan" class="form-control" value="<?= esc($user['jabatan'] ?? '') ?>" placeholder="Contoh: Administrator">
+                            <small class="text-muted">Jabatan di kelurahan</small>
                         </div>
                         <div class="col-12">
-                            <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" value="<?= esc($user['email'] ?? '') ?>">
+                            <label class="form-label fw-semibold">No. Telepon</label>
+                            <input type="tel" name="notelp" class="form-control" value="<?= esc($user['notelp'] ?? '') ?>" placeholder="08123456789">
+                            <small class="text-muted">Nomor telepon aktif</small>
                         </div>
                     </div>
                     <div class="mt-4">

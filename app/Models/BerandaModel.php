@@ -11,6 +11,7 @@ class BerandaModel extends Model
     protected $allowedFields = [
         'judul',
         'slug',
+        'deskripsi',
         'gambar',
         'status'
     ];

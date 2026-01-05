@@ -56,10 +56,11 @@ class Beranda extends BaseController
 
         try {
             $this->berandaModel->save([
-                'judul'  => $this->request->getPost('judul'),
-                'slug'   => $slug,
-                'status' => $this->request->getPost('status') ?? 'publish',
-                'gambar' => $namaGambar
+                'judul'     => $this->request->getPost('judul'),
+                'slug'      => $slug,
+                'deskripsi' => $this->request->getPost('deskripsi'),
+                'status'    => $this->request->getPost('status') ?? 'publish',
+                'gambar'    => $namaGambar
             ]);
 
             ActivityLogModel::log('create', 'prestasi', 'Menambahkan prestasi: ' . $this->request->getPost('judul'));
@@ -106,9 +107,10 @@ class Beranda extends BaseController
         }
         
         $data = [
-            'judul'  => $this->request->getPost('judul'),
-            'slug'   => url_title($this->request->getPost('judul'), '-', true),
-            'status' => $this->request->getPost('status') ?? 'publish'
+            'judul'     => $this->request->getPost('judul'),
+            'slug'      => url_title($this->request->getPost('judul'), '-', true),
+            'deskripsi' => $this->request->getPost('deskripsi'),
+            'status'    => $this->request->getPost('status') ?? 'publish'
         ];
 
         $file = $this->request->getFile('gambar');

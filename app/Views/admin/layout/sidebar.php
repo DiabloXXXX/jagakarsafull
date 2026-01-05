@@ -3,7 +3,12 @@
     <!-- Brand -->
     <div class="sidebar-brand">
         <img src="<?= base_url('images/features/logo.png') ?>" alt="Logo Jagakarsa">
-        <span class="sidebar-brand-text">Jagakarsa</span>
+        <div class="d-flex flex-column">
+            <span class="sidebar-brand-text">Kelurahan Jagakarsa</span>
+            <span style="font-size: 0.7rem; color: rgba(255,255,255,0.6); font-weight: 400; margin-top: -2px;">
+                Kec. Jagakarsa, Jakarta Selatan
+            </span>
+        </div>
     </div>
     
     <!-- Menu -->

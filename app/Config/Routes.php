@@ -17,6 +17,8 @@ $routes->get('/layanan', 'Home::layanan');
 $routes->get('/berita', 'Home::berita');
 $routes->get('/berita/(:segment)', 'Home::detail_berita/$1');
 
+$routes->get('/prestasi/(:segment)', 'Home::detail_prestasi/$1');
+
 $routes->get('/banjir', 'Home::banjir');
 $routes->get('/peta', 'Home::peta');
 
@@ -110,8 +112,9 @@ $routes->group('admin', ['filter' => 'authGuard'], function ($routes) {
     $routes->post('notification/send', 'Notification::sendToAll');
 
     // Settings
-    $routes->get('pengaturan', 'Admin::pengaturan'); // URL: /admin/pengaturan
-    $routes->post('user/update', 'Admin::update');
+    $routes->get('pengaturan', 'Admin::pengaturan');
+    $routes->post('pengaturan/update', 'Admin::update');
+    $routes->post('pengaturan/password', 'Admin::password');
 });
 
 

@@ -88,6 +88,15 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
+                        <label class="form-label">Kategori</label>
+                        <select name="kategori" class="form-select">
+                            <option value="pengumuman" <?= ($berita['kategori'] ?? 'pengumuman') === 'pengumuman' ? 'selected' : '' ?>>Pengumuman</option>
+                            <option value="kegiatan" <?= ($berita['kategori'] ?? '') === 'kegiatan' ? 'selected' : '' ?>>Kegiatan</option>
+                            <option value="info" <?= ($berita['kategori'] ?? '') === 'info' ? 'selected' : '' ?>>Informasi</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
                         <label class="form-label">Status</label>
                         <select name="status" class="form-select">
                             <option value="publish" <?= ($berita['status'] ?? 'publish') === 'publish' ? 'selected' : '' ?>>Dipublikasikan</option>

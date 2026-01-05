@@ -16,16 +16,22 @@ class VisitorModel extends Model
     public function getStats()
     {
         $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime('-1 day'));
+        $weekAgo = date('Y-m-d', strtotime('-7 days'));
         $month = date('m');
         $year = date('Y');
 
         return [
             'total' => $this->countAll(),
-            'today' => $this->where('access_date', $today)->countAllResults(),
-            'month' => $this->where('MONTH(access_date)', $month)
+            'today' => $this->where('access_date', $today)->countAllResults(false),
+            'yesterday' => $this->where('access_date', $yesterday)->countAllResults(false),
+            'weekly' => $this->where('access_date >=', $weekAgo)
+                            ->where('access_date <=', $today)
+                            ->countAllResults(false),
+            'monthly' => $this->where('MONTH(access_date)', $month)
                            ->where('YEAR(access_date)', $year)
-                           ->countAllResults(),
-            'year'  => $this->where('YEAR(access_date)', $year)->countAllResults()
+                           ->countAllResults(false),
+            'yearly'  => $this->where('YEAR(access_date)', $year)->countAllResults(false)
         ];
     }
 }

@@ -87,6 +87,7 @@
                                 <button class="btn btn-sm btn-warning flex-fill editBtn"
                                     data-id="<?= $p['id'] ?>"
                                     data-judul="<?= esc($p['judul']) ?>"
+                                    data-deskripsi="<?= esc($p['deskripsi'] ?? '') ?>"
                                     data-status="<?= $p['status'] ?>"
                                     data-gambar="<?= $p['gambar'] ?>"
                                     data-bs-toggle="modal"
@@ -132,6 +133,12 @@
                         <label class="form-label fw-medium">Nama Prestasi <span class="text-danger">*</span></label>
                         <input type="text" name="judul" class="form-control" placeholder="Masukkan nama prestasi" required>
                     </div>
+                    <div class="mb-3">                        <label class="form-label fw-medium">Deskripsi</label>
+                        <textarea name="deskripsi" class="form-control" rows="4" placeholder="Jelaskan tentang prestasi ini..."></textarea>
+                    </div>
+                    <div class="mb-3">                        <label class="form-label fw-medium">Deskripsi</label>
+                        <textarea name="deskripsi" class="form-control" rows="4" placeholder="Jelaskan tentang prestasi ini..."></textarea>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label fw-medium">Foto Prestasi</label>
                         <input type="file" name="gambar" class="form-control" accept="image/*">
@@ -174,6 +181,10 @@
                         <input type="text" id="editJudul" name="judul" class="form-control" placeholder="Masukkan nama prestasi" required>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label fw-medium">Deskripsi</label>
+                        <textarea id="editDeskripsi" name="deskripsi" class="form-control" rows="4" placeholder="Jelaskan tentang prestasi ini..."></textarea>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label fw-medium">Foto Prestasi</label>
                         <div id="previewContainer" class="mb-2" style="display: none;">
                             <img id="previewGambar" class="img-fluid rounded" style="max-height: 150px;">
@@ -205,6 +216,7 @@
     document.querySelectorAll('.editBtn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.getElementById('editJudul').value = this.dataset.judul;
+            document.getElementById('editDeskripsi').value = this.dataset.deskripsi || '';
             document.getElementById('editStatus').value = this.dataset.status;
 
             document.getElementById('editForm').action =
