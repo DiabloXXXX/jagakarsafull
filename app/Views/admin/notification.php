@@ -30,7 +30,7 @@
                     </div>
                 <?php endif; ?>
 
-                <form action="/admin/notification/send" method="post">
+                <form action="<?= base_url('admin/notification/send') ?>" method="post">
                     <?= csrf_field() ?>
                     <div class="mb-3">
                         <label class="form-label">Judul Notifikasi</label>
