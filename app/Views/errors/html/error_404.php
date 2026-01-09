@@ -55,12 +55,14 @@
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a href="<?= base_url('/') ?>" 
                class="px-8 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 focus:ring-4 focus:ring-primary-light/50">
-                🏠 Kembali ke Beranda
+                <svg class="inline-block w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+                Kembali ke Beranda
             </a>
             
             <a href="<?= base_url('/berita') ?>" 
                class="px-8 py-3 bg-white text-gray-700 hover:text-primary font-semibold rounded-full shadow-md hover:shadow-lg border border-gray-200 transition-all">
-                📰 Baca Berita
+                <svg class="inline-block w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"/><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"/></svg>
+                Baca Berita
             </a>
         </div>
 
@@ -69,7 +71,7 @@
             <p class="text-sm text-gray-500 mb-4">Atau butuh bantuan langsung?</p>
             <a href="<?= base_url('/chatbot') ?>" class="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-medium transition-colors group">
                 <span class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20">
-                    🤖
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/></svg>
                 </span>
                 Tanya Chatbot Kami
             </a>

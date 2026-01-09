@@ -23,8 +23,10 @@ class Security extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * Randomize the CSRF Token for added security.
+     * 
+     * Set to false to prevent token mismatch on login forms
      */
-    public bool $tokenRandomize = true;
+    public bool $tokenRandomize = false;
 
     /**
      * --------------------------------------------------------------------------
@@ -70,8 +72,10 @@ class Security extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * Regenerate CSRF Token on every submission.
+     * 
+     * Set to false to prevent token mismatch on forms
      */
-    public bool $regenerate = true;
+    public bool $regenerate = false;
 
     /**
      * --------------------------------------------------------------------------

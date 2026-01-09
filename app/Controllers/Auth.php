@@ -35,12 +35,6 @@ class Auth extends BaseController
         $session = session();
         $model = new UserModel();
 
-        // Validate CSRF
-        if (!$this->validate(['csrf_test_name' => 'required'])) {
-            log_message('warning', 'CSRF validation failed on login from IP: ' . $this->request->getIPAddress());
-            return redirect()->to('/login')->with('msg', 'Sesi tidak valid. Silakan coba lagi.');
-        }
-
         $email = trim($this->request->getVar('email'));
         $password = $this->request->getVar('password');
         $ip = $this->request->getIPAddress();

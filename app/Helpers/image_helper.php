@@ -19,7 +19,7 @@ if (!function_exists('upload_and_resize_image')) {
      */
     function upload_and_resize_image($file, string $uploadPath, int $maxWidth = 1920, int $maxHeight = 1080, int $quality = 85): array
     {
-        // Validasi file
+        // ===== SECURITY LAYER 1: Basic Validation =====
         if (!$file || !$file->isValid() || $file->hasMoved()) {
             return [
                 'success' => false,
@@ -28,9 +28,12 @@ if (!function_exists('upload_and_resize_image')) {
             ];
         }
 
-        // Validasi tipe file
-        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-        if (!in_array($file->getMimeType(), $allowedTypes)) {
+        // ===== SECURITY LAYER 2: MIME Type Validation =====
+        $allowedMimes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        $fileMime = $file->getMimeType();
+        
+        if (!in_array($fileMime, $allowedMimes)) {
+            log_message('warning', 'Blocked upload - Invalid MIME: ' . $fileMime . ' from IP: ' . service('request')->getIPAddress());
             return [
                 'success' => false,
                 'filename' => null,
@@ -38,48 +41,120 @@ if (!function_exists('upload_and_resize_image')) {
             ];
         }
 
-        // Validasi ukuran file (max 10MB untuk upload, akan dikompresi)
-        if ($file->getSize() > 10 * 1024 * 1024) {
+        // ===== SECURITY LAYER 3: Extension Whitelist =====
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        $fileExtension = strtolower($file->getClientExtension());
+        
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            log_message('warning', 'Blocked upload - Invalid extension: ' . $fileExtension . ' from IP: ' . service('request')->getIPAddress());
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Ukuran file maksimal 10MB'
+                'error' => 'Ekstensi file tidak diperbolehkan'
             ];
         }
 
-        // Generate nama file
-        $newName = $file->getRandomName();
-        
-        // Pastikan folder upload ada
-        $fullPath = FCPATH . $uploadPath;
-        if (!is_dir($fullPath)) {
-            mkdir($fullPath, 0755, true);
+        // ===== SECURITY LAYER 4: File Size Validation =====
+        $maxSize = 5 * 1024 * 1024; // 5MB for security
+        if ($file->getSize() > $maxSize) {
+            return [
+                'success' => false,
+                'filename' => null,
+                'error' => 'Ukuran file maksimal 5MB'
+            ];
         }
 
-        // Pindahkan file terlebih dahulu
-        $file->move($fullPath, $newName);
+        // ===== SECURITY LAYER 5: Magic Byte Verification =====
+        $tempPath = $file->getTempName();
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $realMimeType = finfo_file($finfo, $tempPath);
+        finfo_close($finfo);
+        
+        if (!in_array($realMimeType, $allowedMimes)) {
+            log_message('warning', 'Blocked upload - Magic byte mismatch. Claimed: ' . $fileMime . ', Actual: ' . $realMimeType . ' from IP: ' . service('request')->getIPAddress());
+            return [
+                'success' => false,
+                'filename' => null,
+                'error' => 'File tidak valid (magic byte mismatch)'
+            ];
+        }
+
+        // ===== SECURITY LAYER 6: Image Content Validation =====
+        $imageInfo = @getimagesize($tempPath);
+        if ($imageInfo === false) {
+            log_message('warning', 'Blocked upload - Not a valid image from IP: ' . service('request')->getIPAddress());
+            return [
+                'success' => false,
+                'filename' => null,
+                'error' => 'File bukan gambar yang valid'
+            ];
+        }
+
+        // ===== SECURITY LAYER 7: Sanitize Filename =====
+        // Generate secure random filename (prevent directory traversal)
+        $newName = bin2hex(random_bytes(16)) . '.' . $fileExtension;
+        
+        // ===== SECURITY LAYER 8: Secure Directory =====
+        $fullPath = rtrim(FCPATH . $uploadPath, '/');
+        
+        // Prevent directory traversal
+        $realFullPath = realpath($fullPath);
+        $expectedPath = realpath(FCPATH);
+        
+        if ($realFullPath === false || strpos($realFullPath, $expectedPath) !== 0) {
+            log_message('error', 'Directory traversal attempt from IP: ' . service('request')->getIPAddress());
+            return [
+                'success' => false,
+                'filename' => null,
+                'error' => 'Invalid upload path'
+            ];
+        }
+        
+        if (!is_dir($fullPath)) {
+            if (!mkdir($fullPath, 0755, true)) {
+                return [
+                    'success' => false,
+                    'filename' => null,
+                    'error' => 'Gagal membuat direktori upload'
+                ];
+            }
+        }
+
+        // ===== SECURITY LAYER 9: Move File =====
+        try {
+            $file->move($fullPath, $newName);
+        } catch (\Exception $e) {
+            log_message('error', 'File upload failed: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'filename' => null,
+                'error' => 'Gagal mengupload file'
+            ];
+        }
+
         $uploadedFilePath = $fullPath . '/' . $newName;
 
-        // Cek apakah perlu resize
-        $imageInfo = getimagesize($uploadedFilePath);
-        if ($imageInfo === false) {
-            return [
-                'success' => true,
-                'filename' => $newName,
-                'error' => null,
-                'resized' => false
-            ];
+        // ===== SECURITY LAYER 10: Re-encode Image (Remove EXIF/Malicious Code) =====
+        try {
+            $image = \Config\Services::image();
+            
+            // Re-encode to strip metadata and potential malicious code
+            $image->withFile($uploadedFilePath)
+                ->save($uploadedFilePath, $quality);
+                
+        } catch (\Exception $e) {
+            log_message('warning', 'Image re-encoding failed: ' . $e->getMessage());
+            // Continue anyway, file is already validated
         }
 
+        // ===== Resize if needed =====
         $originalWidth = $imageInfo[0];
         $originalHeight = $imageInfo[1];
 
-        // Jika ukuran melebihi max, resize
         if ($originalWidth > $maxWidth || $originalHeight > $maxHeight) {
             try {
                 $image = \Config\Services::image();
                 
-                // Hitung rasio untuk maintain aspect ratio
                 $ratioW = $maxWidth / $originalWidth;
                 $ratioH = $maxHeight / $originalHeight;
                 $ratio = min($ratioW, $ratioH);
@@ -91,6 +166,8 @@ if (!function_exists('upload_and_resize_image')) {
                     ->resize($newWidth, $newHeight, true, 'auto')
                     ->save($uploadedFilePath, $quality);
 
+                log_message('info', 'Image uploaded and resized: ' . $newName . ' by user: ' . (session()->get('username') ?? 'unknown'));
+
                 return [
                     'success' => true,
                     'filename' => $newName,
@@ -100,7 +177,6 @@ if (!function_exists('upload_and_resize_image')) {
                     'new_size' => [$newWidth, $newHeight]
                 ];
             } catch (\Exception $e) {
-                // Jika resize gagal, tetap gunakan file original
                 log_message('warning', 'Image resize failed: ' . $e->getMessage());
                 return [
                     'success' => true,
@@ -111,6 +187,8 @@ if (!function_exists('upload_and_resize_image')) {
                 ];
             }
         }
+
+        log_message('info', 'Image uploaded: ' . $newName . ' by user: ' . (session()->get('username') ?? 'unknown'));
 
         return [
             'success' => true,

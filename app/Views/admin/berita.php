@@ -155,10 +155,10 @@
                             <td class="text-muted"><?= date('d M Y', strtotime($item['created_at'] ?? 'now')) ?></td>
                             <td class="text-end">
                                 <div class="dropdown">
-                                    <button class="btn btn-sm btn-light" data-bs-toggle="dropdown">
-                                        <i class="bi bi-three-dots"></i>
+                                    <button class="btn btn-sm btn-light" data-bs-toggle="dropdown" data-bs-auto-close="true">
+                                        <i class="bi bi-three-dots-vertical"></i>
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
                                         <li><a class="dropdown-item" href="<?= base_url('/admin/berita/edit/' . ($item['id'] ?? 0)) ?>"><i class="bi bi-pencil me-2"></i>Edit</a></li>
                                         <li><a class="dropdown-item" href="<?= base_url('/berita/' . ($item['slug'] ?? '')) ?>" target="_blank"><i class="bi bi-eye me-2"></i>Lihat</a></li>
                                         <li><hr class="dropdown-divider"></li>

@@ -196,7 +196,6 @@
             <ul class="mb-0 small">
                 <li><strong>Keywords:</strong> Pisahkan dengan koma (,). Contoh: <code>jam, buka, operasional, waktu</code></li>
                 <li><strong>Featured:</strong> FAQ yang ditandai featured akan muncul sebagai saran cepat di chatbot</li>
-                <li><strong>Icon:</strong> Gunakan emoji untuk membuat respons lebih menarik</li>
                 <li><strong>Answer:</strong> Gunakan format HTML sederhana seperti &lt;br&gt; untuk baris baru</li>
             </ul>
         </div>
@@ -234,8 +233,8 @@
                             </datalist>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label class="form-label fw-medium">Icon (Emoji)</label>
-                            <input type="text" name="icon" class="form-control text-center" value="💬" placeholder="💬">
+                            <label class="form-label fw-medium">Icon</label>
+                            <input type="text" name="icon" class="form-control text-center" value="" placeholder="Icon (opsional)">
                         </div>
                     </div>
                     <div class="mb-3">
@@ -305,7 +304,7 @@
                             </datalist>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label class="form-label fw-medium">Icon (Emoji)</label>
+                            <label class="form-label fw-medium">Icon</label>
                             <input type="text" id="editIcon" name="icon" class="form-control text-center">
                         </div>
                     </div>

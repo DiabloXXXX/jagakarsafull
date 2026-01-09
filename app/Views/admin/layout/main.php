@@ -427,12 +427,13 @@
         
         .card-body .table-responsive {
             overflow-x: auto !important;
+            overflow-y: visible !important;
         }
         
         .table thead th {
             background: #f8fafc;
             border: none;
-            padding: 16px;
+            padding: 20px 24px;
             font-weight: 600;
             color: #475569;
             text-transform: uppercase;
@@ -441,15 +442,21 @@
         }
         
         .table tbody td {
-            padding: 16px;
+            padding: 20px 24px;
             vertical-align: middle;
             border-color: #f1f5f9;
+            font-size: 0.95rem;
         }
         
         /* Dropdown fix for tables */
+        .table .dropdown {
+            position: static;
+        }
+        
         .table .dropdown-menu {
             position: absolute !important;
             z-index: 1050;
+            min-width: 160px;
         }
         
         /* ==================== BADGES ==================== */

@@ -125,3 +125,36 @@ _modules/*
 /results/
 /phpunit*.xml
 .vercel
+
+#-------------------------
+# Archive & Backup Files
+#-------------------------
+archive/
+*.backup
+*.bak
+*.old
+
+#-------------------------
+# Deployment Configs (Not Used)
+#-------------------------
+.vercel/
+railway.toml
+RAILWAY.md
+Dockerfile
+Procfile
+nixpacks.toml
+builds
+
+#-------------------------
+# Temporary Files
+#-------------------------
+*.sql
+!database/*.sql
+migrate_security.php
+export_database.bat
+
+#-------------------------
+# Production Environment
+#-------------------------
+.env.production
+

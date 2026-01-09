@@ -234,7 +234,7 @@
     <div class="container py-5">
         <div class="text-center text-white">
             <h5 class="d-inline-block text-uppercase border-bottom border-5 mb-3">Chatbot Kelurahan Jagakarsa</h5>
-            <h1 class="display-5 mb-3">💬 Asisten Virtual Anda</h1>
+            <h1 class="display-5 mb-3"><i class="bi bi-chat-dots me-2"></i>Asisten Virtual Anda</h1>
             <p class="lead">Tanyakan apa saja tentang layanan kelurahan kami</p>
         </div>
     </div>
@@ -244,7 +244,7 @@
     <div class="chat-container">
         <div class="chat-header d-flex justify-content-between align-items-center">
             <div>
-                <h4 class="mb-1">🤖 Chatbot Kelurahan</h4>
+                <h4 class="mb-1"><i class="bi bi-robot me-2"></i>Chatbot Kelurahan</h4>
                 <small>Siap membantu Anda 24/7</small>
             </div>
             <button onclick="clearChat()" class="btn btn-sm btn-outline-light" title="Bersihkan Chat">
@@ -253,15 +253,15 @@
         </div>
 
         <div class="suggestions-container" id="suggestionsContainer">
-            <div class="suggestions-title">💡 Pertanyaan yang sering ditanyakan:</div>
+            <div class="suggestions-title"><i class="bi bi-lightbulb me-1"></i>Pertanyaan yang sering ditanyakan:</div>
             <div class="suggestions-grid" id="suggestionsGrid">
                 <!-- Will be loaded dynamically -->
-                <span class="suggestion-chip" onclick="sendSuggestion('Jam operasional kelurahan')">⏰ Jam Buka</span>
-                <span class="suggestion-chip" onclick="sendSuggestion('Alamat kelurahan')">📍 Alamat</span>
-                <span class="suggestion-chip" onclick="sendSuggestion('Layanan yang tersedia')">📋 Layanan</span>
-                <span class="suggestion-chip" onclick="sendSuggestion('Nomor kontak kelurahan')">📞 Kontak</span>
-                <span class="suggestion-chip" onclick="sendSuggestion('Cara membuat KTP')">🆔 Buat KTP</span>
-                <span class="suggestion-chip" onclick="sendSuggestion('Persyaratan Kartu Keluarga')">👨‍👩‍👧‍👦 Kartu Keluarga</span>
+                <span class="suggestion-chip" onclick="sendSuggestion('Jam operasional kelurahan')"><i class="bi bi-clock me-1"></i>Jam Buka</span>
+                <span class="suggestion-chip" onclick="sendSuggestion('Alamat kelurahan')"><i class="bi bi-geo-alt me-1"></i>Alamat</span>
+                <span class="suggestion-chip" onclick="sendSuggestion('Layanan yang tersedia')"><i class="bi bi-list-check me-1"></i>Layanan</span>
+                <span class="suggestion-chip" onclick="sendSuggestion('Nomor kontak kelurahan')"><i class="bi bi-telephone me-1"></i>Kontak</span>
+                <span class="suggestion-chip" onclick="sendSuggestion('Cara membuat KTP')"><i class="bi bi-card-heading me-1"></i>Buat KTP</span>
+                <span class="suggestion-chip" onclick="sendSuggestion('Persyaratan Kartu Keluarga')"><i class="bi bi-people me-1"></i>Kartu Keluarga</span>
             </div>
         </div>
 
@@ -269,7 +269,7 @@
             <div class="message bot">
                 <div class="message-label">Bot</div>
                 <div class="message-bubble">
-                    👋 <strong>Halo! Selamat datang di Chatbot Kelurahan Jagakarsa.</strong><br><br>
+                    <strong>Halo! Selamat datang di Chatbot Kelurahan Jagakarsa.</strong><br><br>
                     Saya siap membantu Anda dengan informasi tentang:
                     <ul style="margin: 0.5rem 0 0 0; padding-left: 1.25rem;">
                         <li>Jam operasional</li>
@@ -277,7 +277,7 @@
                         <li>Persyaratan dokumen</li>
                         <li>Dan informasi lainnya</li>
                     </ul>
-                    <br>Silakan pilih pertanyaan di atas atau ketik pertanyaan Anda sendiri! 😊
+                    <br>Silakan pilih pertanyaan di atas atau ketik pertanyaan Anda sendiri!
                 </div>
             </div>
             <div class="typing-indicator" id="typingIndicator">
@@ -404,7 +404,7 @@
             
         } catch (error) {
             hideTyping();
-            addMessage('❌ Maaf, terjadi kesalahan koneksi. Silakan coba lagi.', false);
+            addMessage('Maaf, terjadi kesalahan koneksi. Silakan coba lagi.', false);
         }
     }
 
